@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="OpenDolphin" default="all" basedir=".">
+
+  <property name="client.dir" value="${basedir}/client" />
+  <property name="lib.dir" value="${basedir}/lib" />
+
+  <path id="classpath">
+    <fileset dir="${lib.dir}" includes="*.jar" />
+  </path>
+
+  <target name="all" description="build all jar">
+    <ant dir="SocketLib" target="jar" />
+    <ant dir="client" target="jar" />
+    <ant dir="AllergyPanelPlugin" target="jar" />
+    <ant dir="LaboTestDocumentPanelPlugin" target="jar" />
+    <ant dir="MemoPanelPlugin" target="jar" />
+    <ant dir="PatientInfoDocumentPanelPlugin" target="jar" />
+    <ant dir="PatientVisitInspectorPlugin" target="jar" />
+    <ant dir="PhysicalPanelPlugin" target="jar" />
+  </target>
+
+  <target name="test" depends="all" description="test all">
+    <ant dir="SocketLib" target="test" />
+    <ant dir="client" target="test" />
+    <ant dir="AllergyPanelPlugin" target="test" />
+    <ant dir="LaboTestDocumentPanelPlugin" target="test" />
+    <ant dir="MemoPanelPlugin" target="test" />
+    <ant dir="PatientInfoDocumentPanelPlugin" target="test" />
+    <ant dir="PatientVisitInspectorPlugin" target="test" />
+    <ant dir="PhysicalPanelPlugin" target="test" />
+  </target>
+
+  <target name="clean" description="clean all *.jar">
+    <ant dir="SocketLib" target="clean" />
+    <ant dir="client" target="clean" />
+    <ant dir="AllergyPanelPlugin" target="clean" />
+    <ant dir="LaboTestDocumentPanelPlugin" target="clean" />
+    <ant dir="MemoPanelPlugin" target="clean" />
+    <ant dir="PatientInfoDocumentPanelPlugin" target="clean" />
+    <ant dir="PatientVisitInspectorPlugin" target="clean" />
+    <ant dir="PhysicalPanelPlugin" target="clean" />
+  </target>
+
+  <target name="run" description="start OpenDolphin">
+    <exec executable="java" dir="${client.dir}">
+      <arg line="-jar dist/OpenDolphin.jar" />
+    </exec>
+  </target>
+
+  <property name="utils.dir" value="${basedir}/utils" />
+  <property name="utils.dir.1.9" value="${utils.dir}/for1.9" />
+  <property name="utils.dir.1.9.pkg" value="${utils.dir.1.9}/pkg" />
+  <property name="release.dir" value="release" />
+  <property name="installer.dir" value="${release.dir}/OpenDolphin-installer" />
+  <property name="installer.client.dir" value="${installer.dir}/client" />
+  <property name="installer.client.plugins.dir" value="${installer.client.dir}/installed_plugins" />
+  <property name="config.dir" value="config" />
+  <property name="update.dir" value="${release.dir}/OpenDolphin-update" />
+
+  <target name="pack" description="Packing to release" depends="clean_pack,up,all">
+    <!-- pre process -->
+    <copy tofile="${config.dir}/profile.properties" overwrite="false" file="${config.dir}/profile.properties.template" />
+    <copy tofile="${config.dir}/radiology_method_data.cvs" overwrite="false" file="${config.dir}/radiology_method_data.cvs.template" />
+    <exec executable="native2ascii" dir="${config.dir}">
+      <arg line="-encoding UTF8 profile.properties profile_ja.properties" />
+    </exec>
+    <copy todir="${client.dir}/src/open/dolphin/master" overwrite="true">
+      <fileset dir="${config.dir}">
+        <exclude name="*.template" />
+        <exclude name="profile.properties" />
+      </fileset>
+    </copy>
+    <!-- build and so on -->
+    <delete dir="${release.dir}" />
+    <mkdir dir="${release.dir}" />
+    <ant dir="${client.dir}" target="dbinitializer" />
+    <ant dir="${client.dir}" target="jar" />
+    <copy file="${client.dir}/dist/OpenDolphin.jar" todir="${release.dir}" overwrite="true" />
+    <copy todir="${release.dir}/lib" overwrite="true">
+      <fileset dir="${client.dir}/dist/lib" />
+    </copy>
+    <exec executable="sh" dir="${utils.dir.1.9}">
+      <arg line="pack.sh" />
+    </exec>
+    <exec executable="cp" dir="${basedir}">
+      <arg line="-r ${utils.dir.1.9.pkg}/OpenDolphin-installer ${release.dir}" />
+    </exec>
+    <mkdir dir="${installer.client.dir}" />
+    <copy file="${release.dir}/OpenDolphin.jar" todir="${installer.client.dir}" overwrite="true" />
+    <copy todir="${installer.client.dir}/lib" overwrite="true">
+      <fileset dir="${release.dir}/lib" />
+    </copy>
+    <!--- Plugins -->
+    <mkdir dir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/AllergyPanelPlugin/dist/AllergyPanelPlugin.jar" todir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/LaboTestDocumentPanelPlugin/dist/LaboTestDocumentPanelPlugin.jar" todir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/MemoPanelPlugin/dist/MemoPanelPlugin.jar" todir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/PatientInfoDocumentPanelPlugin/dist/PatientInfoDocumentPanelPlugin.jar" todir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/PatientVisitInspectorPlugin/dist/PatientVisitInspectorPlugin.jar" todir="${installer.client.plugins.dir}" />
+    <copy file="${basedir}/PhysicalPanelPlugin/dist/PhysicalPanelPlugin.jar" todir="${installer.client.plugins.dir}" />
+  </target>
+
+  <target name="update_pack" description="Create update package" depends="clean_pack,up,all,pack">
+    <mkdir dir="${update.dir}" />
+    <exec executable="cp" dir="${installer.dir}">
+      <arg line="client_install.sh ../../${update.dir}/update.sh" />
+    </exec>
+    <copy todir="${update.dir}/images" overwrite="true">
+      <fileset dir="${installer.dir}/images" />
+    </copy>
+    <copy todir="${update.dir}/bin" overwrite="true">
+      <fileset dir="${installer.dir}/bin" />
+    </copy>
+    <copy todir="${update.dir}/client/installed_plugins" overwrite="true">
+      <fileset dir="${installer.client.plugins.dir}" />
+    </copy>
+    <mkdir dir="${update.dir}/client" />
+    <copy todir="${update.dir}/client" overwrite="true">
+      <fileset dir="${installer.dir}/client" />
+    </copy>
+    <exec executable="cp" dir="${installer.dir}">
+      <arg line="-r backup-usb-storage ../../${update.dir}" />
+    </exec>
+  </target>
+
+  <property name="tester.dir" value="${release.dir}/TesterPack" />
+  <target name="tester_pack" description="Create package for tester" depends="update_pack">
+    <mkdir dir="${tester.dir}" />
+    <copy todir="${tester.dir}" file="${release.dir}/OpenDolphin.jar" overwrite="true" />
+    <copy todir="${tester.dir}/lib" overwrite="true">
+      <fileset dir="${release.dir}/lib" />
+    </copy>
+    <copy todir="${tester.dir}/installed_plugins" overwrite="true">
+      <fileset dir="${installer.client.dir}/installed_plugins" />
+    </copy>
+  </target>
+
+  <target name="clean_pack" description="cleaning files about pack">
+    <delete dir="${release.dir}" />
+    <delete>
+      <fileset dir="${client.dir}/src/open/dolphin/master">
+        <include name="profile_ja.properties" />
+        <include name="radiology_method_data.cvs" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="clean_update_pack" description="cleaning files about update pack">
+    <delete dir="${update.dir}" />
+  </target>
+
+  <target name="up" description="Update repository using svn">
+    <exec executable="svn" dir="${basedir}">
+      <arg line="up" />
+    </exec>
+  </target>
+
+  <target name="deploy" description="deploy Web Start" >
+    <copy todir="${utils.dir}/for_webstart" file="${client.dir}/dist/OpenDolphin.jar" />
+  </target>
+
+</project>
+

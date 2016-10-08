@@ -1,0 +1,372 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="bg1">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="bg2">
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+      </Properties>
+    </Component>
+  </NonVisualComponents>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="sendClaim" alignment="0" pref="408" max="32767" attributes="1"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="pvt" pref="384" max="32767" attributes="1"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Component id="port" alignment="0" max="32767" attributes="1"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Component id="sendClaim" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="port" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="pvt" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="sendClaim">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="CLAIM&#xff08;&#x8acb;&#x6c42;&#x30c7;&#x30fc;&#x30bf;&#xff09;&#x9001;&#x4fe1;"/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="sendClaim" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="panel1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="panel1" noResource="true"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+              <BorderConstraints direction="First"/>
+            </Constraint>
+          </Constraints>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="alignment" type="int" value="0"/>
+            <Property name="horizontalGap" type="int" value="0"/>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="label1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#x8a3a;&#x7642;&#x884c;&#x70ba;&#x9001;&#x4fe1;:"/>
+                <Property name="name" type="java.lang.String" value="label1" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="sendClaimYes">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="bg1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&#x9001;&#x4fe1;&#x3059;&#x308b;"/>
+                <Property name="name" type="java.lang.String" value="sendClaimYes" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sendClaimYesActionPerformed"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sendClaimYesPropertyChange"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="sendClaimNo">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="bg1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&#x9001;&#x4fe1;&#x3057;&#x306a;&#x3044;"/>
+                <Property name="name" type="java.lang.String" value="sendClaimNo" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sendClaimNoStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sendClaimNoActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="port">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="&#x30ec;&#x30bb;&#x30b3;&#x30f3;&#x60c5;&#x5831;"/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="port" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="label2" min="-2" max="-2" attributes="0"/>
+                              <Component id="label3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="v34" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="5" pref="5" max="5" attributes="0"/>
+                                  <Component id="v40" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="vPanel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="claimHostCombo" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="label5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jmariField" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="label6" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="Label" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label7" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="claimPortField" min="-2" pref="72" max="-2" attributes="0"/>
+                              <Component id="claimAddressField" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="code" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="147" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="claimHostCombo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="label2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="vPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="label3" min="-2" max="-2" attributes="0"/>
+                      <Component id="v34" min="-2" max="-2" attributes="0"/>
+                      <Component id="v40" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="label5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jmariField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="label6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="claimAddressField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="label7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="claimPortField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="code" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="label2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x6a5f;&#x7a2e;:"/>
+            <Property name="name" type="java.lang.String" value="label2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="claimHostCombo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="&#x65e5;&#x533b;&#x6a19;&#x6e96;&#x30ec;&#x30bb;&#x30b3;&#x30f3;(ORCA)"/>
+              </StringArray>
+            </Property>
+            <Property name="name" type="java.lang.String" value="claimHostCombo" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="claimHostComboPropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="label3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x30d0;&#x30fc;&#x30b8;&#x30e7;&#x30f3;:"/>
+            <Property name="name" type="java.lang.String" value="label3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JPanel" name="vPanel">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="vPanel" noResource="true"/>
+          </Properties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="alignment" type="int" value="0"/>
+            <Property name="verticalGap" type="int" value="0"/>
+          </Layout>
+        </Container>
+        <Component class="javax.swing.JLabel" name="label5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x533b;&#x7642;&#x6a5f;&#x95a2;ID:  JPN&quot;"/>
+            <Property name="name" type="java.lang.String" value="label5" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jmariField">
+          <Properties>
+            <Property name="columns" type="int" value="10"/>
+            <Property name="toolTipText" type="java.lang.String" value="&#x533b;&#x7642;&#x6a5f;&#x95a2;&#x30b3;&#x30fc;&#x30c9;&#x306e;&#x6570;&#x5b57;&#x90e8;&#x5206;&#x306e;&#x307f;12&#x6841;&#x3092;&#x5165;&#x529b;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;"/>
+            <Property name="name" type="java.lang.String" value="jmariField" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="label6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="IP&#x30a2;&#x30c9;&#x30ec;&#x30b9;:"/>
+            <Property name="name" type="java.lang.String" value="label6" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="claimAddressField">
+          <Properties>
+            <Property name="columns" type="int" value="10"/>
+            <Property name="name" type="java.lang.String" value="claimAddressField" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="claimAddressFieldPropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="label7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x30dd;&#x30fc;&#x30c8;&#x756a;&#x53f7;:"/>
+            <Property name="name" type="java.lang.String" value="label7" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="claimPortField">
+          <Properties>
+            <Property name="columns" type="int" value="5"/>
+            <Property name="name" type="java.lang.String" value="claimPortField" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="claimPortFieldPropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="v34">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="bg2"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="3.4"/>
+            <Property name="name" type="java.lang.String" value="v34" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="v34ActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="v34PropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="v40">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="bg2"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="4.0&#x4ee5;&#x964d;"/>
+            <Property name="name" type="java.lang.String" value="v40" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="v40ActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="v40PropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="code">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="UTF-8"/>
+                <StringItem index="1" value="Shift_JIS"/>
+                <StringItem index="2" value="EUC-JP"/>
+              </StringArray>
+            </Property>
+            <Property name="name" type="java.lang.String" value="code" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="codePropertyChange"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Label">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x30a8;&#x30f3;&#x30b3;&#x30fc;&#x30c9;"/>
+            <Property name="name" type="java.lang.String" value="Label" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pvt">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="&#x53d7;&#x4ed8;&#x60c5;&#x5831;&#x306e;&#x53d7;&#x4fe1;"/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="pvt" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JCheckBox" name="useAsPVTServer">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x3053;&#x306e;&#x30de;&#x30b7;&#x30f3;&#x3067;ORCA&#x304b;&#x3089;&#x306e;&#x53d7;&#x4ed8;&#x60c5;&#x5831;&#x3092;&#x53d7;&#x4fe1;&#x3059;&#x308b;"/>
+            <Property name="toolTipText" type="java.lang.String" value="&#x3053;&#x306e;&#x30de;&#x30b7;&#x30f3;&#x3067;ORCA&#x304b;&#x3089;&#x306e;&#x53d7;&#x4ed8;&#x60c5;&#x5831;&#x3092;&#x53d7;&#x4fe1;&#x3059;&#x308b;&#x5834;&#x5408;&#x306f;&#x30c1;&#x30a7;&#x30c3;&#x30af;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;"/>
+            <Property name="name" type="java.lang.String" value="useAsPVTServer" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="useAsPVTServerPropertyChange"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+              <BorderConstraints direction="Center"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

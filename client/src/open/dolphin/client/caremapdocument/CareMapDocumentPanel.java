@@ -1,0 +1,1046 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * CareMapDocument.java
+ *
+ * Created on 2010/03/08, 15:56:30
+ */
+package open.dolphin.client.caremapdocument;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Window;
+import java.util.List;
+import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.Icon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import open.dolphin.client.ChartMediator;
+import open.dolphin.client.ChartWindow;
+import open.dolphin.client.ColorFillIcon;
+import open.dolphin.client.GUIConst;
+import open.dolphin.client.IChart;
+import open.dolphin.client.IChartDocument;
+import open.dolphin.client.LetterView;
+import open.dolphin.client.Period;
+import open.dolphin.helper.DBTask;
+import open.dolphin.infomodel.BundleDolphin;
+import open.dolphin.infomodel.ModuleModel;
+import open.dolphin.project.GlobalVariables;
+import open.dolphin.project.GlobalConstants;
+import open.dolphin.delegater.remote.RemoteAppointmentDelegater;
+import open.dolphin.delegater.remote.RemoteDocumentDelegater;
+import open.dolphin.dto.ImageSearchSpec;
+import open.dolphin.dto.ModuleSearchSpec;
+import open.dolphin.infomodel.AppointmentModel;
+import open.dolphin.infomodel.IInfoModel;
+import open.dolphin.infomodel.ModelUtils;
+
+/**
+ *　治療履歴画面　MEMO:画面
+ * @author
+ */
+public class CareMapDocumentPanel extends javax.swing.JPanel implements IChartDocument, open.dolphin.helper.IChartCommandAccepter {
+
+    /**
+     *
+     */
+    public static final String MARK_EVENT_PROP = "MARK_EVENT_PROP";
+    /**
+     *
+     */
+    public static final String PERIOD_PROP = "PERIOD_PROP";
+    /**
+     *
+     */
+    public static final String CALENDAR_PROP = "CALENDAR_PROP";
+    /**
+     * 
+     */
+    public static final String SELECTED_DATE_PROP = "SELECTED_DATE_PROP";
+    /**
+     *
+     */
+    public static final String SELECTED_APPOINT_DATE_PROP = "SELECTED_DATE_PROP";
+    /**
+     *
+     */
+    public static final String APPOINT_PROP = "APPOINT_PROP";
+    private static final String[] orderCodes = {"medOrder", "treatmentOrder", "instractionChargeOrder", "testOrder", "physiologyOrder", "radiologyOrder"};
+    private static final int IMAGE_WIDTH = 128;
+    private static final int IMAGE_HEIGHT = 128;
+    /**
+     *
+     */
+    public static final String TITLE = "治療履歴";
+    private OrderHistoryPanel history;
+    private AppointTablePanel appointTable;
+    private ImageHistoryPanel imagePanel;
+    private String imageEvent = "image"; //orderCodes[2]; //
+    // Calendars
+    private SimpleCalendarPanel c0;
+    private SimpleCalendarPanel c1;
+    private SimpleCalendarPanel c2;
+    private Period selectedPeriod;
+    private int origin;
+    private PropertyChangeSupport boundSupport;
+    private Hashtable<Integer, SimpleCalendarPanel> cPool;
+    private String selectedEvent;
+    // モジュール検索関連
+    private List allModules;
+    private List allAppointments;
+    private List allImages;
+    private javax.swing.Timer taskTimer;//MEMO: unused?
+    //元々はAbstractChartDocumentから継承
+    private static final String[] CHART_MENUS = {
+        GUIConst.ACTION_OPEN_KARTE, GUIConst.ACTION_SAVE, GUIConst.ACTION_DIRECTION, GUIConst.ACTION_DELETE, GUIConst.ACTION_PRINT, GUIConst.ACTION_MODIFY_KARTE,
+        GUIConst.ACTION_ASCENDING, GUIConst.ACTION_DESCENDING, GUIConst.ACTION_SHOW_MODIFIED, GUIConst.ACTION_SHOW_UNSEND, GUIConst.ACTION_SHOW_SEND, GUIConst.ACTION_SHOW_NEWEST,
+        GUIConst.ACTION_INSERT_TEXT, GUIConst.ACTION_INSERT_SCHEMA, GUIConst.ACTION_INSERT_STAMP, GUIConst.ACTION_SELECT_INSURANCE,
+        GUIConst.ACTION_CUT, GUIConst.ACTION_COPY, GUIConst.ACTION_PASTE, GUIConst.ACTION_UNDO, GUIConst.ACTION_REDO
+    };
+    private IChart parent;
+    private String title;
+    private boolean dirty;
+    private ModuleModel selectedHistoryModel;
+
+    /** Creates new form CareMapDocument
+     * @param parent
+     */
+    public CareMapDocumentPanel(IChart parent) {
+        this.title = TITLE;
+        this.parent = parent;
+        boundSupport = new PropertyChangeSupport(this);
+        initComponents();
+    }
+    /**
+     * 
+     * @return
+     */
+    @Override
+    public TYPE getType() {
+        return TYPE.CareMapDocumentPanel;
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        updateAppoBtn = new javax.swing.JButton();
+        historyPanel = new javax.swing.JPanel();
+        calenderPanel = new javax.swing.JPanel();
+        controlPanel = new javax.swing.JPanel();
+        prevBtn = new javax.swing.JButton();
+        orderCombo = new javax.swing.JComboBox();
+        nextBtn = new javax.swing.JButton();
+        han = new javax.swing.JPanel();
+        appointPanel = new javax.swing.JPanel();
+
+        updateAppoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open/dolphin/resources/images/save_24.gif"))); // NOI18N
+        updateAppoBtn.setEnabled(false);
+        updateAppoBtn.setName("updateAppoBtn"); // NOI18N
+        updateAppoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAppoBtnActionPerformed(evt);
+            }
+        });
+
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 11, 11));
+
+        historyPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("履 歴"));
+        historyPanel.setName("historyPanel"); // NOI18N
+        historyPanel.setLayout(new java.awt.BorderLayout());
+
+        calenderPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        calenderPanel.setMinimumSize(new java.awt.Dimension(101, 101));
+        calenderPanel.setName("calenderPanel"); // NOI18N
+        calenderPanel.setLayout(new javax.swing.BoxLayout(calenderPanel, javax.swing.BoxLayout.X_AXIS));
+
+        controlPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        controlPanel.setName("controlPanel"); // NOI18N
+
+        prevBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open/dolphin/resources/images/back_16.gif"))); // NOI18N
+        prevBtn.setToolTipText("前月");
+        prevBtn.setName("prevBtn"); // NOI18N
+        prevBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prevBtnActionPerformed(evt);
+            }
+        });
+
+        orderCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "処方", "処置", "指導", "ラボテスト", "生体検査", "画像診断" }));
+        orderCombo.setMaximumSize(new java.awt.Dimension(100, 26));
+        orderCombo.setName("orderCombo"); // NOI18N
+        orderCombo.setPreferredSize(new java.awt.Dimension(100, 26));
+        orderCombo.setRenderer(new ComboBoxRenderer());
+        orderCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                orderComboItemStateChanged(evt);
+            }
+        });
+
+        nextBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open/dolphin/resources/images/forwd_16.gif"))); // NOI18N
+        nextBtn.setToolTipText("次月");
+        nextBtn.setName("nextBtn"); // NOI18N
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
+
+        han.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        han.setMaximumSize(new java.awt.Dimension(10, 10));
+        han.setName("han"); // NOI18N
+        han.setLayout(new javax.swing.BoxLayout(han, javax.swing.BoxLayout.X_AXIS));
+
+        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addComponent(prevBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(orderCombo, 0, 166, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextBtn))
+                    .addComponent(han, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
+        );
+        controlPanelLayout.setVerticalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(han, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(orderCombo, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(prevBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        appointPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        appointPanel.setName("appointPanel"); // NOI18N
+        appointPanel.setLayout(new javax.swing.BoxLayout(appointPanel, javax.swing.BoxLayout.LINE_AXIS));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(calenderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addComponent(controlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(historyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addComponent(appointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(calenderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(appointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void prevBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevBtnActionPerformed
+        // クリックされたら (c0 | c1 | c2) -> (c0=test | c1=c0 | c2=c1)
+        SimpleCalendarPanel.SimpleCalendarPool pool = SimpleCalendarPanel.SimpleCalendarPool.getInstance();
+        origin--;
+        SimpleCalendarPanel save = c0;
+        SimpleCalendarPanel test = (SimpleCalendarPanel) cPool.get(new Integer(origin - 1));
+
+        if (test != null) {
+            // Pool されていた場合
+            c0 = test;
+
+        } else {
+            // 新規に作成
+            c0 = pool.acquireSimpleCalendar(origin - 1);
+            c0.setChartContext(getParentContext());
+            c0.setParent(CareMapDocumentPanel.this);
+
+            // カレンダの日をクリックした時に束縛属性通知を受けるリスナ
+            c0.addPropertyChangeListener(SELECTED_DATE_PROP, history);
+            c0.addPropertyChangeListener(SELECTED_DATE_PROP, imagePanel);
+            c0.addPropertyChangeListener(SELECTED_APPOINT_DATE_PROP, appointTable);
+            c0.addPropertyChangeListener(APPOINT_PROP, appointTable);
+
+            cPool.put(new Integer(origin - 1), c0);
+        }
+
+        c2 = c1;
+        c1 = save;
+        calenderPanel.removeAll();
+        calenderPanel.add(c0);
+        calenderPanel.add(c1);
+        calenderPanel.add(c2);
+        calenderPanel.revalidate();
+
+        // オーダ履歴の抽出期間全体が変化したので通知する
+        Period pp = new Period(this);
+        pp.setStartDate(c0.getFirstDate());
+        pp.setEndDate(c2.getLastDate());
+        setSelectedPeriod(pp);
+    }//GEN-LAST:event_prevBtnActionPerformed
+    /**
+     * 
+     * @param evt
+     */
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        // クリックされたら (c0 | c1 | c2) -> (c0=c1 | c1=c2 | c2=test)
+        SimpleCalendarPanel.SimpleCalendarPool pool = SimpleCalendarPanel.SimpleCalendarPool.getInstance();
+        origin++;
+        SimpleCalendarPanel save = c2;
+        SimpleCalendarPanel test = (SimpleCalendarPanel) cPool.get(new Integer(origin + 1));
+
+        if (test != null) {
+            // Pool されていた場合
+            c2 = test;
+
+        } else {
+            // 新規に作成する
+            c2 = pool.acquireSimpleCalendar(origin + 1);
+            c2.setChartContext(getParentContext());
+            c2.setParent(CareMapDocumentPanel.this);
+
+            // カレンダの日をクリックした時に束縛属性通知を受けるリスナ
+            c2.addPropertyChangeListener(SELECTED_DATE_PROP, history);
+            c2.addPropertyChangeListener(SELECTED_DATE_PROP, imagePanel);
+            c2.addPropertyChangeListener(SELECTED_APPOINT_DATE_PROP, appointTable);
+            c2.addPropertyChangeListener(APPOINT_PROP, appointTable);
+
+            cPool.put(new Integer(origin + 1), c2);
+        }
+
+        c0 = c1;
+        c1 = save;
+        calenderPanel.removeAll();
+        calenderPanel.add(c0);
+        calenderPanel.add(c1);
+        calenderPanel.add(c2);
+        calenderPanel.revalidate();
+
+        // オーダ履歴の抽出期間全体が変化したので通知する
+        Period pp = new Period(this);
+        pp.setStartDate(c0.getFirstDate());
+        pp.setEndDate(c2.getLastDate());
+        setSelectedPeriod(pp);
+    }//GEN-LAST:event_nextBtnActionPerformed
+    /**
+     * 
+     * @param evt
+     */
+    private void updateAppoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAppoBtnActionPerformed
+        save();
+    }//GEN-LAST:event_updateAppoBtnActionPerformed
+    /**
+     * 
+     * @param evt
+     */
+    private void orderComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_orderComboItemStateChanged
+        // オーダ選択が変更されたら
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            String event = getMarkCode();
+
+            if (event.equals(imageEvent)) {
+                // 画像履歴が選択された場合 Image Panel に変更する
+                historyPanel.removeAll();
+                historyPanel.add(imagePanel, BorderLayout.CENTER);
+                historyPanel.revalidate();
+                repaint();
+
+            } else if (selectedEvent.equals(imageEvent)) {
+                // 現在のイベントが Image の場合は オーダ履歴用と入れ替える
+                historyPanel.removeAll();
+                historyPanel.add(history, BorderLayout.CENTER);
+                historyPanel.revalidate();
+                repaint();
+            }
+
+            // 選択されたオーダをイベント属性に設定する
+            setSelectedEvent(event);
+        }
+    }//GEN-LAST:event_orderComboItemStateChanged
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel appointPanel;
+    private javax.swing.JPanel calenderPanel;
+    private javax.swing.JPanel controlPanel;
+    private javax.swing.JPanel han;
+    private javax.swing.JPanel historyPanel;
+    private javax.swing.JButton nextBtn;
+    private javax.swing.JComboBox orderCombo;
+    private javax.swing.JButton prevBtn;
+    private javax.swing.JButton updateAppoBtn;
+    // End of variables declaration//GEN-END:variables
+
+    /**
+     * 初期化する。
+     */
+    public void initialize() {
+
+        cPool = new Hashtable<Integer, SimpleCalendarPanel>(12, 0.75f);
+        IChart chartCtx = getParentContext();
+        // 先月、今月、来月のカレンダーを生成する
+        SimpleCalendarPanel.SimpleCalendarPool pool = SimpleCalendarPanel.SimpleCalendarPool.getInstance();
+        c0 = pool.acquireSimpleCalendar(origin - 1);
+        c1 = pool.acquireSimpleCalendar(origin);
+        c2 = pool.acquireSimpleCalendar(origin + 1);
+        c0.setChartContext(chartCtx);
+        c1.setChartContext(chartCtx);
+        c2.setChartContext(chartCtx);
+        c0.setParent(this);
+        c1.setParent(this);
+        c2.setParent(this);
+        cPool.put(new Integer(origin - 1), c0);
+        cPool.put(new Integer(origin), c1);
+        cPool.put(new Integer(origin + 1), c2);
+
+        calenderPanel.add(Box.createHorizontalStrut(11));
+        calenderPanel.add(c0);
+        calenderPanel.add(Box.createHorizontalStrut(11));
+        calenderPanel.add(c1);
+        calenderPanel.add(Box.createHorizontalStrut(11));
+        calenderPanel.add(c2);
+        calenderPanel.add(Box.createHorizontalStrut(11));
+
+        appointTable = new AppointTablePanel(updateAppoBtn);
+        appointTable.setParent(this);
+        appointTable.setBorder(BorderFactory.createTitledBorder("予約表"));
+        appointTable.setPreferredSize(new Dimension(500, 260));
+        appointPanel.add(appointTable);
+
+        // オーダ履歴表示用テーブルを生成する
+        history = new OrderHistoryPanel(this);
+        history.setPid(chartCtx.getPatient().getPatientId());
+
+        // 画像履歴用のパネルを生成する
+        imagePanel = new ImageHistoryPanel();
+        imagePanel.setMyParent(this);
+        imagePanel.setPid(chartCtx.getPatient().getPatientId());
+
+        han.add(new JLabel("予約( "));
+        for (int i = 0; i < AppointColors.appointNames.length; i++) {
+            if (i != 0) {
+                han.add(Box.createHorizontalStrut(7));
+            }
+            AppointLabel dl = new AppointLabel(AppointColors.appointNames[i], new ColorFillIcon(AppointColors.appointColors[i], 10, 10, 1), SwingConstants.CENTER);
+            han.add(dl);
+        }
+        han.add(new JLabel(" )"));
+        han.add(Box.createHorizontalStrut(7));
+        Color birthC = GlobalConstants.getColor("color.BIRTHDAY_BACK");
+        han.add(new JLabel("誕生日", new ColorFillIcon(birthC, 10, 10, 1), SwingConstants.CENTER));
+        han.add(Box.createHorizontalStrut(11));
+
+        // 検査履歴と画像歴の切り替えコンテナ
+        historyPanel.add(history, BorderLayout.CENTER);
+
+        // カレンダーセットの変更通知
+        addPropertyChangeListener(CALENDAR_PROP, appointTable);
+
+        c0.addPropertyChangeListener(APPOINT_PROP, appointTable);
+        c1.addPropertyChangeListener(APPOINT_PROP, appointTable);
+        c2.addPropertyChangeListener(APPOINT_PROP, appointTable);
+
+        // カレンダーの日を選択した時に通知されるもの
+        c0.addPropertyChangeListener(SELECTED_DATE_PROP, history);
+        c1.addPropertyChangeListener(SELECTED_DATE_PROP, history);
+        c2.addPropertyChangeListener(SELECTED_DATE_PROP, history);
+        c0.addPropertyChangeListener(SELECTED_DATE_PROP, imagePanel);
+        c1.addPropertyChangeListener(SELECTED_DATE_PROP, imagePanel);
+        c2.addPropertyChangeListener(SELECTED_DATE_PROP, imagePanel);
+
+        // カレンダ上の予約日を選択された時に通知されるもの
+        c0.addPropertyChangeListener(SELECTED_APPOINT_DATE_PROP, appointTable);
+        c1.addPropertyChangeListener(SELECTED_APPOINT_DATE_PROP, appointTable);
+        c2.addPropertyChangeListener(SELECTED_APPOINT_DATE_PROP, appointTable);
+    }
+    /**
+     * 
+     */
+    @Override
+    public void start() {
+        initialize();
+        enter();
+        // 最初に選択されているオーダの履歴を表示する
+        setSelectedEvent(getMarkCode());
+        Period period = new Period(this);
+        period.setStartDate(c0.getFirstDate());
+        period.setEndDate(c2.getLastDate());
+        setSelectedPeriod(period);
+    }
+    /**
+     * 
+     */
+    @Override
+    public void stop() {
+    }
+
+    /**
+     * プロパティチェンジリスナを追加する。
+     *
+     * @param prop プロパティ名
+     * @param l リスナ
+     */
+    @Override
+    public void addPropertyChangeListener(String prop, PropertyChangeListener l) {
+        boundSupport.addPropertyChangeListener(prop, l);
+    }
+
+    /**
+     * プロパティチェンジリスナを削除する。
+     *
+     * @param prop プロパティ名
+     * @param l リスナ
+     */
+    @Override
+    public void removePropertyChangeListener(String prop, PropertyChangeListener l) {
+        boundSupport.removePropertyChangeListener(prop, l);
+    }
+
+    /**
+     * 表示している期間内にあるモジュールの日をマークする。
+     * @param newModules  表示している期間内にあるモジュールのリスト
+     */
+    public void setAllModules(List newModules) {
+        if (newModules != null) {
+            if (!newModules.isEmpty()) {
+                allModules = newModules;
+                c0.setModuleList(selectedEvent, (List) allModules.get(0));
+                c1.setModuleList(selectedEvent, (List) allModules.get(1));
+                c2.setModuleList(selectedEvent, (List) allModules.get(2));
+                history.setModuleList(allModules);
+            }
+        }
+    }
+
+    /**
+     * 表示している期間内にある予約日をマークする。
+     * @param allAppo 表示している期間内にある予約日のリスト
+     */
+    public void setAllAppointments(List allAppo) {
+        if (allAppo != null) {
+            if (!allAppo.isEmpty()) {
+                allAppointments = allAppo;
+                c0.setAppointmentList((List) allAppointments.get(0));
+                c1.setAppointmentList((List) allAppointments.get(1));
+                c2.setAppointmentList((List) allAppointments.get(2));
+                notifyCalendar();
+            }
+        }
+    }
+
+    /**
+     * 表示している期間内にある画像をマークする。
+     * @param images
+     */
+    public void setAllImages(List images) {
+        if (images != null) {
+            if (!images.isEmpty()) {
+                allImages = images;
+                c0.setImageList(selectedEvent, (List) allImages.get(0));
+                c1.setImageList(selectedEvent, (List) allImages.get(1));
+                c2.setImageList(selectedEvent, (List) allImages.get(2));
+                imagePanel.setImageList(allImages);
+            }
+        }
+    }
+
+    /**
+     * 抽出期間が変更された場合、現在選択されているイベントに応じ、 モジュールまたは画像履歴を取得する。
+     * @param p
+     */
+    public void setSelectedPeriod(Period p) {
+
+        selectedPeriod = p;
+
+        if (getSelectedEvent().equals(imageEvent)) {
+            getImageList();
+        } else {
+            getModuleList(true);
+        }
+    }
+
+    /**
+     * カレンダーセットの変更通知をする。
+     */
+    private void notifyCalendar() {
+        SimpleCalendarPanel[] sc = new SimpleCalendarPanel[3];
+        sc[0] = c0;
+        sc[1] = c1;
+        sc[2] = c2;
+        boundSupport.firePropertyChange("CALENDAR_PROP", null, sc);
+    }
+    /**
+     * 
+     * @return
+     */
+    public String getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    /**
+     * 表示するオーダが変更された場合、選択されたイベントに応じ、 モジュールまたは画像履歴を取得する。
+     * @param code
+     */
+    public void setSelectedEvent(String code) {
+        //String old = selectedEvent;
+        selectedEvent = code;
+
+        if (getSelectedEvent().equals(imageEvent)) {
+            getImageList();
+
+        } else {
+            getModuleList(false);
+        }
+    }
+
+    /**
+     * ヒストリーパネルで選択されているスタンプを設定する
+     * @param model
+     */
+    public void setSelectedHistoryModel(ModuleModel model) {
+        this.selectedHistoryModel = model;
+    }
+    /**
+     * 
+     * @return
+     */
+    public ModuleModel getSelectedHistoryModel() {
+        return this.selectedHistoryModel;
+    }
+
+    /**
+     * 設定されている curEvent と抽出期間からモジュールのリストを取得する。
+     */
+    private void getModuleList(final boolean appo) {
+        if (selectedEvent != null) {
+            if (selectedPeriod != null) {
+                final ModuleSearchSpec spec = new ModuleSearchSpec();
+                spec.setCode(ModuleSearchSpec.ENTITY_SEARCH);
+                spec.setKarteId(getParentContext().getKarte().getId());
+                spec.setEntity(selectedEvent);
+                spec.setStatus("F");
+
+                // カレンダ別に検索する
+                Date[] fromDate = new Date[3];
+                fromDate[0] = ModelUtils.getDateTimeAsObject(c0.getFirstDate() + "T00:00:00");
+                fromDate[1] = ModelUtils.getDateTimeAsObject(c1.getFirstDate() + "T00:00:00");
+                fromDate[2] = ModelUtils.getDateTimeAsObject(c2.getFirstDate() + "T00:00:00");
+                spec.setFromDate(fromDate);
+
+                Date[] toDate = new Date[3];
+                toDate[0] = ModelUtils.getDateTimeAsObject(c0.getLastDate() + "T23:59:59");
+                toDate[1] = ModelUtils.getDateTimeAsObject(c1.getLastDate() + "T23:59:59");
+                toDate[2] = ModelUtils.getDateTimeAsObject(c2.getLastDate() + "T23:59:59");
+                spec.setToDate(toDate);
+
+                final RemoteDocumentDelegater ddl = new RemoteDocumentDelegater();
+
+                DBTask task = new DBTask<List[]>(getParentContext()) {
+
+                    @Override
+                    public List[] doInBackground() throws Exception {
+                        List[] ret = new List[2];
+                        List modules = ddl.getModuleList(spec);
+                        ret[0] = modules;
+                        if (appo) {
+                            List appointments = ddl.getAppoinmentList(spec);
+                            ret[1] = appointments;
+                        }
+                        return ret;
+                    }
+
+                    @Override
+                    public void succeeded(List[] result) {
+                        setAllModules(result[0]);
+                        if (appo) {
+                            setAllAppointments(result[1]);
+                        }
+                    }
+                };
+                task.execute();
+            }
+        }
+    }
+
+    /**
+     * 設定されている抽出期間から画像履歴を取得する。
+     */
+    private void getImageList() {
+        if (selectedPeriod != null) {
+            final ImageSearchSpec spec = new ImageSearchSpec();
+            spec.setCode(ImageSearchSpec.PATIENT_SEARCH);
+            spec.setKarteId(getParentContext().getKarte().getId());
+            spec.setStatus("F");
+
+            // カレンダ別に検索する
+            Date[] fromDate = new Date[3];
+            fromDate[0] = ModelUtils.getDateTimeAsObject(c0.getFirstDate() + "T00:00:00");
+            fromDate[1] = ModelUtils.getDateTimeAsObject(c1.getFirstDate() + "T00:00:00");
+            fromDate[2] = ModelUtils.getDateTimeAsObject(c2.getFirstDate() + "T00:00:00");
+            spec.setFromDate(fromDate);
+
+            Date[] toDate = new Date[3];
+            toDate[0] = ModelUtils.getDateTimeAsObject(c0.getLastDate() + "T23:59:59");
+            toDate[1] = ModelUtils.getDateTimeAsObject(c1.getLastDate() + "T23:59:59");
+            toDate[2] = ModelUtils.getDateTimeAsObject(c2.getLastDate() + "T23:59:59");
+            spec.setToDate(toDate);
+
+            spec.setIconSize(new Dimension(IMAGE_WIDTH, IMAGE_HEIGHT));
+
+            final RemoteDocumentDelegater ddl = new RemoteDocumentDelegater();
+
+            DBTask task = new DBTask<List>(getParentContext()) {
+
+                @Override
+                public List doInBackground() throws Exception {
+                    return ddl.getImageList(spec);
+                }
+
+                @Override
+                public void succeeded(List result) {
+                    setAllImages(result);
+                }
+            };
+
+            task.execute();
+        }
+    }
+    /**
+     * 
+     * @param dirty
+     */
+    @Override
+    public void setDirty(boolean dirty) {
+        if (isDirty() != dirty) {
+            this.dirty = dirty;
+            updateAppoBtn.setEnabled(isDirty());
+        }
+    }
+
+    /**
+     * 新規及び変更された予約を保存する。
+     */
+    private boolean save() {
+
+        final List<AppointmentModel> results = new ArrayList<AppointmentModel>();
+        Enumeration e = cPool.elements();
+
+        while (e.hasMoreElements()) {
+
+            // カレンダー単位に抽出する
+            SimpleCalendarPanel c = (SimpleCalendarPanel) e.nextElement();
+            if (c.getRelativeMonth() >= 0) {
+
+                List<AppointmentModel> list = c.getUpdatedAppoints();
+                int size = list.size();
+                for (int i = 0; i < size; i++) {
+                    AppointmentModel appo = list.get(i);
+
+                    // 新規予約のみEJB3.0の関係を設定する
+                    if (appo.getKarte() == null) {
+                        appo.setKarte(getParentContext().getKarte());
+                    }
+                    appo.setCreator(GlobalVariables.getUserModel());
+
+                    // 確定日、記録日、開始日
+                    // 現状の実装はここまで
+                    Date confirmed = new Date();
+                    appo.setConfirmed(confirmed);
+                    appo.setRecorded(confirmed);
+                    if (appo.getStarted() == null) {
+                        appo.setStarted(confirmed);
+                    }
+                    // 常にFINAL
+                    appo.setStatus(IInfoModel.STATUS_FINAL);
+
+                    results.add(list.get(i));
+                }
+            }
+        }
+   
+        if (results.isEmpty()) {
+            return true;
+        }
+
+        final RemoteAppointmentDelegater adl = new RemoteAppointmentDelegater();
+
+        DBTask task = new DBTask<Void>(getParentContext()) {
+
+            @Override
+            protected Void doInBackground() throws Exception {
+                adl.putAppointments(results);
+                return null;
+            }
+
+            @Override
+            public void succeeded(Void result) {
+                setDirty(false);
+            }
+        };
+
+        task.execute();
+        return true;
+    }
+    /**
+     * 
+     * @return
+     */
+    public JComboBox getOrderCombo() {
+        return orderCombo;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getMarkCode() {
+        // 履歴名を検索コード(EntityName)に変換
+        int index = orderCombo.getSelectedIndex();
+        return orderCodes[index];
+    }
+    /**
+     * 
+     * @return
+     */
+    @Override
+    public boolean itLayoutSaved() {
+        return true;
+    }
+
+    /**
+     * 元々はAbstractChartDocumentから継承
+     * @return
+     */
+    @Override
+    public String getTitle() {
+        return title;
+    }
+    /**
+     *
+     * @return
+     */
+    @Override
+    public IChart getParentContext() {
+        return parent;
+    }
+    /**
+     *
+     */
+    @Override
+    public void enter() {
+        getParentContext().getStatusPanel().setMessage("");
+        getParentContext().getChartMediator().setAccepter(this);
+        disableMenus();
+
+        getParentContext().enabledAction(GUIConst.ACTION_NEW_KARTE, true);
+        getParentContext().enabledAction(GUIConst.ACTION_NEW_DOCUMENT, true);
+        getParentContext().enabledAction(GUIConst.ACTION_ADD_USER, GlobalVariables.isAdmin());
+
+        if (getParentContext() instanceof ChartWindow && ((ChartWindow) getParentContext()).existLetterPane()) {
+            ((ChartWindow) getParentContext()).getChartMediator().getAction(GUIConst.ACTION_LETTER_PASTE).setEnabled(true);
+        } else {
+            ((ChartWindow) getParentContext()).getChartMediator().getAction(GUIConst.ACTION_LETTER_PASTE).setEnabled(false);
+        }
+    }
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean prepare() {
+        return true;
+    }
+    /**
+     *
+     * @return
+     */
+    private boolean print() {
+        return true;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isReadOnly() {
+        return getParentContext().isReadOnly();
+    }
+
+    /**
+     *
+     */
+    public void disableMenus() {
+        // このウインドウに関連する全てのメニューをdisableにする
+        ChartMediator mediator = getParentContext().getChartMediator();
+        mediator.disableMenus(CHART_MENUS);
+    }
+
+    /**
+     * 共通の警告表示を行う。
+     * @param title
+     * @param message
+     */
+    protected void warning(String title, String message) {
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        JOptionPane.showMessageDialog(parentWindow, message, GlobalConstants.getFrameTitle(title), JOptionPane.WARNING_MESSAGE);
+    }
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<JTabbedPane> getTabbedPanels() {
+        return null;
+    }
+    /**
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean update(Object o) {
+        return true;
+    }
+    /**
+     *
+     * @param command
+     * @return
+     */
+    @Override
+    public boolean dispatchChartCommand(open.dolphin.helper.IChartCommandAccepter.ChartCommand command) {
+        switch (command) {
+            case save:
+                return save();
+            case print:
+                return print();
+            case letterPaste:
+                //カルテ右クリックから”紹介状にペースト”を選んだ時にCareMapDocumentが反応してしまう。
+                //本来はChartWindowにディスパッチすべき。
+                return pasteMedicationToLetter();
+            default:
+        }
+        return false;
+    }
+    /**
+     * 
+     * @return
+     */
+    private boolean pasteMedicationToLetter() {
+
+        if (getParentContext() instanceof ChartWindow && ((ChartWindow) getParentContext()).existLetterPane()) {
+            LetterView letterView = ((ChartWindow) getParentContext()).getLetterPane();
+            if (letterView != null) {
+             //   ModuleModel a = getSelectedHistoryModel();
+             //   IStampInfo b = a.getModuleInfo();
+             //   String c = b.getStampName();
+
+                String stampName = getSelectedHistoryModel().getModuleInfo().getStampName();
+                BundleDolphin bundle = (BundleDolphin) getSelectedHistoryModel().getModel();
+
+                StringBuilder message = new StringBuilder();
+                message.append(letterView.getMedication().getText());
+                if (message.length() != 0) {
+                    message.append(System.getProperty("line.separator"));
+                }
+                message.append(bundle.toString().replaceFirst(System.getProperty("line.separator"), "(" + stampName + ")" + System.getProperty("line.separator")));
+                letterView.getMedication().setText(message.toString());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * ComboBoxRenderer MEMO:Component
+     */
+    protected class ComboBoxRenderer extends JLabel implements ListCellRenderer {
+
+        private static final long serialVersionUID = 4661822065789099499L;
+
+        /**
+         *
+         */
+        public ComboBoxRenderer() {
+            setOpaque(true);
+            setVerticalAlignment(CENTER);
+        }
+
+        /*
+         * This method finds the image and text corresponding to the selected
+         * value and returns the label, set up to display the text and image.
+         */
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value,
+                int index, boolean isSelected, boolean cellHasFocus) {
+            // Get the selected index. (The index param isn't
+            // always valid, so just use the value.)
+
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+                setForeground(list.getSelectionForeground());
+            } else {
+                setBackground(list.getBackground());
+                setForeground(list.getForeground());
+            }
+
+            Icon icon = getOrderIcon((String) value);
+
+            if (icon != null) {
+                setIcon(icon);
+                setText((String) value);
+            } else {
+                setText((String) value);
+            }
+
+            return (Component) this;
+        }
+
+        private Icon getOrderIcon(String name) {
+            Icon ret = null;
+            return ret;
+        }
+    }
+}

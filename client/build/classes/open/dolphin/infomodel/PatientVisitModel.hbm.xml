@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.PatientVisitModel" schema="public" table="d_patient_visit">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.PatientModel" name="patient">
+      <column name="patient_id" not-null="true"/>
+    </many-to-one>
+    <property name="facilityId" type="string">
+      <column name="facilityid" not-null="true"/>
+    </property>
+    <property name="pvtDate" type="string">
+      <column name="pvtdate" not-null="true"/>
+    </property>
+    <property name="department" type="string">
+      <column name="department"/>
+    </property>
+    <property name="status" type="int">
+      <column name="status" not-null="true"/>
+    </property>
+    <property name="insuranceUid" type="string">
+      <column name="insuranceuid"/>
+    </property>
+  </class>
+</hibernate-mapping>

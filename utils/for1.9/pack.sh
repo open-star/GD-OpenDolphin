@@ -1,0 +1,41 @@
+#! /bin/sh
+
+CURRENTPATH=$(dirname "$0")
+PKGPATH="$CURRENTPATH/pkg"
+INSTALLERPATH="$PKGPATH/OpenDolphin-installer"
+INITDBPATH="$INSTALLERPATH/init_db"
+INITDBLIBPATH="$INITDBPATH/lib"
+CLIENTPATH="$CURRENTPATH/../../client"
+DISTPATH="$CLIENTPATH/dist"
+DISTLIBPATH="$DISTPATH/lib"
+SCHEMAPATH="$CLIENTPATH/schema"
+
+echo "Packaging OpenDolphin installer..."
+# Installer
+rm -rf "$INSTALLERPATH"
+mkdir -p  "$INSTALLERPATH"
+cp -r bin images "$INSTALLERPATH"
+cp setup.rb client_install.sh "$INSTALLERPATH"
+cp -r "$SCHEMAPATH" "$INSTALLERPATH"
+cp -r backup-usb-storage "$INSTALLERPATH"
+# Database Initalizer
+mkdir -p "$INITDBLIBPATH"
+cp "$DISTPATH/DatabaseInitializer.jar" "$INITDBPATH"
+cp "$DISTLIBPATH/antlr-2.7.6.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/asm.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/cglib-2.1.3.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/commons-collections-2.1.1.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/commons-logging.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/dom4j-1.6.1.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/ejb3-persistence.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/hibernate-annotations.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/hibernate-commons-annotations.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/hibernate-entitymanager.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/hibernate-tools.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/hibernate3.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/jdom.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/jta.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/log4j.jar" "$INITDBLIBPATH"
+cp "$DISTLIBPATH/postgresql-8.4-701.jdbc3.jar" "$INITDBLIBPATH"
+echo "...packaging done"
+

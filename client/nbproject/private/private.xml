@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
+        <file>
+            <url>src/open/dolphin/client/waitinglist/WaitingListView.java</url>
+            <line>599</line>
+            <line>1252</line>
+        </file>
+        <file>
+            <url>src/open/dolphin/dolphinpeer/PeerBuilder.java</url>
+            <line>186</line>
+        </file>
+        <file>
+            <url>src/open/dolphin/infomodel/PatientVisitModel.java</url>
+            <line>346</line>
+        </file>
+        <file>
+            <url>src/open/dolphin/client/Dolphin.java</url>
+            <line>477</line>
+        </file>
+        <file>
+            <url>src/open/dolphin/client/KarteEditor.java</url>
+            <line>1115</line>
+        </file>
+        <file>
+            <url>src/open/dolphin/client/ChartWindow.java</url>
+            <line>450</line>
+        </file>
+    </editor-bookmarks>
+</project-private>

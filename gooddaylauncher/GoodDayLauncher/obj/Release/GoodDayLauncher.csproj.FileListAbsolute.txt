@@ -1,0 +1,10 @@
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\bin\Release\GoodDayLauncher.exe
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\bin\Release\GoodDayLauncher.pdb
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.MainForm.resources
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.Properties.Resources.resources
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.csproj.GenerateResource.Cache
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.exe
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.pdb
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Documents and Settings\oda\My Documents\Visual Studio 2008\Projects\GoodDayLauncher\GoodDayLauncher\obj\Release\GoodDayLauncher.DBAddressDialog.resources

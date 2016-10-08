@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.username">dolphin</property>
+    <property name="hibernate.jdbc.use_streams_for_binary">false</property>
+    <property name="hibernate.show_sql">false</property>
+    <mapping class="open.dolphin.infomodel.StampModel" resource="open/dolphin/infomodel/StampModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.SchemaModel" resource="open/dolphin/infomodel/SchemaModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.LetterModel" resource="open/dolphin/infomodel/LetterModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.DocumentModel.hbm" resource="open/dolphin/infomodel/DocumentModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.RegisteredDiagnosisModel" resource="open/dolphin/infomodel/RegisteredDiagnosisModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.ObservationModel" resource="open/dolphin/infomodel/ObservationModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.KarteBean" resource="open/dolphin/infomodel/KarteBean.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.SubscribedTreeModel" resource="open/dolphin/infomodel/SubscribedTreeModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.RadiologyMethodValue" resource="open/dolphin/infomodel/RadiologyMethodValue.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.StampTreeModel" resource="open/dolphin/infomodel/StampTreeModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.LaboModuleValue" resource="open/dolphin/infomodel/LaboModuleValue.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.PatientMemoModel" resource="open/dolphin/infomodel/PatientMemoModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.PublishedTreeModel" resource="open/dolphin/infomodel/PublishedTreeModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.LaboSpecimenValue" resource="open/dolphin/infomodel/LaboSpecimenValue.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.HealthInsuranceModel" resource="open/dolphin/infomodel/HealthInsuranceModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.PatientVisitModel" resource="open/dolphin/infomodel/PatientVisitModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.UserModel" resource="open/dolphin/infomodel/UserModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.RoleModel" resource="open/dolphin/infomodel/RoleModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.LaboItemValue" resource="open/dolphin/infomodel/LaboItemValue.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.PatientModel" resource="open/dolphin/infomodel/PatientModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.AppointmentModel" resource="open/dolphin/infomodel/AppointmentModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.FacilityModel" resource="open/dolphin/infomodel/FacilityModel.hbm.xml"/>
+    <mapping class="open.dolphin.infomodel.ModuleModel" resource="open/dolphin/infomodel/ModuleModel.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

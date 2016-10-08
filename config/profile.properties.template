@@ -1,0 +1,26 @@
+#
+# OpenDolphin サーバの初期化テンプレート
+#  =　の後を編集してください。
+#  =　の前後に空白を入れないようにしてください。
+# URL、電子メール 以外は必須です。
+#
+
+# 施設情報
+facility.name=XXXクリニック
+facility.zipcode=xxx-xxxx
+facility.address=XXX県XXX市
+facility.telephone=xxx-xxxx-xxxx
+facility.url=http://www.example.com
+
+# 管理者情報
+admin.login.id=admin
+admin.login.password=admin
+
+# 姓
+admin.sir.name=オープン
+
+# 名
+admin.given.name=ドルフィン
+
+# 電子メール
+admin.email=admin@example.com

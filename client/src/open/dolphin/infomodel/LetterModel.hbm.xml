@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.LetterModel" schema="public" table="d_letter">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <discriminator>
+      <column name="doctype"/>
+    </discriminator>
+    <many-to-one class="open.dolphin.infomodel.KarteBean" name="karte">
+      <column name="karte_id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="open.dolphin.infomodel.UserModel" name="creator">
+      <column name="creator_id" not-null="true"/>
+    </many-to-one>
+    <property name="confirmed" type="timestamp">
+      <column length="29" name="confirmed" not-null="true"/>
+    </property>
+    <property name="started" type="timestamp">
+      <column length="29" name="started" not-null="true"/>
+    </property>
+    <property name="ended" type="timestamp">
+      <column length="29" name="ended"/>
+    </property>
+    <property name="recorded" type="timestamp">
+      <column length="29" name="recorded" not-null="true"/>
+    </property>
+    <property name="linkId" type="long">
+      <column name="linkid" not-null="true"/>
+    </property>
+    <property name="linkRelation" type="string">
+      <column name="linkrelation"/>
+    </property>
+    <property name="status" type="string">
+      <column length="1" name="status" not-null="true"/>
+    </property>
+    <property name="beanBlob" type="blob">
+      <column name="beanbytes" not-null="true"/>
+    </property>
+    <subclass discriminator-value="TOUTOU" name="open.dolphin.infomodel.TouTouLetter">
+      <property name="consultantHospital" type="string">
+        <column name="consultanthospital"/>
+      </property>
+      <property name="consultantDept" type="string">
+        <column name="consultantdept"/>
+      </property>
+      <property name="consultantDoctor" type="string">
+        <column name="consultantdoctor"/>
+      </property>
+      <property name="clientHospital" type="string">
+        <column name="clienthospital"/>
+      </property>
+      <property name="patientName" type="string">
+        <column name="patientname"/>
+      </property>
+      <property name="patientGender" type="string">
+        <column name="patientgender"/>
+      </property>
+      <property name="patientBirthday" type="string">
+        <column name="patientbirthday"/>
+      </property>
+      <property name="disease" type="string">
+        <column name="disease"/>
+      </property>
+      <property name="purpose" type="string">
+        <column name="purpose"/>
+      </property>
+    </subclass>
+    <subclass discriminator-value="TOUTOU_REPLY" name="open.dolphin.infomodel.TouTouReply">
+      <property name="clientDept" type="string">
+        <column name="clientdept"/>
+      </property>
+      <property name="clientDoctor" type="string">
+        <column name="clientdoctor"/>
+      </property>
+      <property name="consultantHospital" type="string">
+        <column name="consultanthospital"/>
+      </property>
+      <property name="consultantDept" type="string">
+        <column name="consultantdept"/>
+      </property>
+      <property name="consultantDoctor" type="string">
+        <column name="consultantdoctor"/>
+      </property>
+      <property name="clientHospital" type="string">
+        <column name="clienthospital"/>
+      </property>
+      <property name="patientName" type="string">
+        <column name="patientname"/>
+      </property>
+      <property name="patientGender" type="string">
+        <column name="patientgender"/>
+      </property>
+      <property name="patientBirthday" type="string">
+        <column name="patientbirthday"/>
+      </property>
+    </subclass>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,920 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * LaboTestBean.java
+ *
+ * Created on 2010/03/09, 17:36:21
+ */
+package open.dolphin.plugin.labotestdocumentpanel;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Window;
+import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.prefs.Preferences;
+import java.util.List;
+import java.util.Set;
+import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
+import open.dolphin.utils.MMLDate;
+import open.dolphin.project.GlobalConstants;
+import open.dolphin.container.NameValuePair;
+import open.dolphin.delegater.remote.RemoteLaboDelegater;
+import open.dolphin.dto.LaboSearchSpec;
+import open.dolphin.project.GlobalVariables;
+import open.dolphin.client.ChartMediator;
+import open.dolphin.client.GUIConst;
+import open.dolphin.client.IChart;
+import open.dolphin.client.IChartDocument;
+import open.dolphin.project.GlobalSettings;
+import open.dolphin.helper.DBTask;
+import open.dolphin.infomodel.LaboItemValue;
+import open.dolphin.infomodel.LaboModuleValue;
+import open.dolphin.infomodel.LaboSpecimenValue;
+import open.dolphin.helper.IChartCommandAccepter;
+
+/**
+ * 検査（ラボテスト)　MEMO:画面
+ * 
+ * @author
+ */
+public class LaboTestDocumentPanel extends javax.swing.JPanel implements IChartDocument, IChartCommandAccepter {//, IMainCommandAccepter
+
+    /**
+     *
+     */
+    public static final String TITLE = "ラボテスト";
+    private static final int CELL_WIDTH = 120;
+    //   private static final int MAX_ITEMS_NONE_FIXED_COLUMNS = 4;
+    private static final int DEFAULT_DIVIDER_LOC = 210;
+    private static final int DEFAULT_DIVIDER_WIDTH = 10;
+    private Object[] header;
+    private Object[][] laboData;
+    private List<SimpleLaboModule> laboModules;
+    private AllLaboTest allLaboTest;
+    private NameValuePair[] periodObject = GlobalConstants.getNameValuePair("docHistory.combo.period");
+    private RemoteLaboDelegater ldl;
+    private LaboTestGraphPanel laboTestGraph;
+    private int dividerWidth;
+    private int dividerLoc;
+    // 標本及び検査値の表示カラー
+    private Color specimenColor = GlobalConstants.getColor("labotest.color.specimen");
+    private Color lowColor = GlobalConstants.getColor("labotest.color.low");
+    private Color normalColor = GlobalConstants.getColor("labotest.color.normal");
+    private Color highColor = GlobalConstants.getColor("labotest.color.high");
+    private Preferences myPrefs = Preferences.userNodeForPackage(this.getClass());
+    //元々はAbstractChartDocumentから継承
+    private static final String[] CHART_MENUS = {
+        GUIConst.ACTION_OPEN_KARTE, GUIConst.ACTION_SAVE, GUIConst.ACTION_DIRECTION, GUIConst.ACTION_DELETE, GUIConst.ACTION_PRINT, GUIConst.ACTION_MODIFY_KARTE,
+        GUIConst.ACTION_ASCENDING, GUIConst.ACTION_DESCENDING, GUIConst.ACTION_SHOW_MODIFIED, GUIConst.ACTION_SHOW_UNSEND, GUIConst.ACTION_SHOW_SEND,
+        GUIConst.ACTION_INSERT_TEXT, GUIConst.ACTION_INSERT_SCHEMA, GUIConst.ACTION_INSERT_STAMP, GUIConst.ACTION_SELECT_INSURANCE,
+        GUIConst.ACTION_CUT, GUIConst.ACTION_COPY, GUIConst.ACTION_PASTE, GUIConst.ACTION_UNDO, GUIConst.ACTION_REDO
+    };
+    private IChart parent;
+    private String title;
+    private boolean dirty;
+    //   private Application app;
+    //   private ApplicationContext appCtx;
+    //   private TaskMonitor taskMonitor;
+    //  private TaskService taskService;
+
+    /** Creates new form LaboTestBean
+     * @param parent
+     */
+    public LaboTestDocumentPanel(IChart parent) {
+        this.title = TITLE;
+        this.parent = parent;
+        initComponents();
+        initCustomComponents();
+
+        //    appCtx = GlobalConstants.getApplicationContext();
+        //  app = appCtx.getApplication();
+        //  taskMonitor = appCtx.getTaskMonitor();
+        //  taskService = appCtx.getTaskService();
+
+        //   setTitle(TITLE);
+        allLaboTest = new AllLaboTest();
+        laboModules = new ArrayList<SimpleLaboModule>();
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public TYPE getType() {
+        return TYPE.Plugin;
+        //      return TYPE.LaboTestDocumentPanel;
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        rowLabel = new javax.swing.JTable();
+        table = new javax.swing.JTable();
+        tablePanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        controlPanel = new javax.swing.JPanel();
+        relativeRadio = new javax.swing.JRadioButton();
+        absoluteRadio = new javax.swing.JRadioButton();
+        bg = new javax.swing.ButtonGroup();
+        countPanel = new javax.swing.JPanel();
+        countField = new javax.swing.JTextField();
+        comboPanel = new javax.swing.JPanel();
+        extractionCombo = new javax.swing.JComboBox();
+        splitPane = new javax.swing.JSplitPane();
+
+        rowLabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        rowLabel.setName("rowLabel"); // NOI18N
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.setName("table"); // NOI18N
+
+        tablePanel.setName("tablePanel"); // NOI18N
+        tablePanel.setLayout(new java.awt.BorderLayout(7, 0));
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        tablePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        controlPanel.setName("controlPanel"); // NOI18N
+        controlPanel.setLayout(new javax.swing.BoxLayout(controlPanel, javax.swing.BoxLayout.X_AXIS));
+        tablePanel.add(controlPanel, java.awt.BorderLayout.SOUTH);
+
+        relativeRadio.setText("相対グラフ");
+        relativeRadio.setName("relativeRadio"); // NOI18N
+        relativeRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                relativeRadioActionPerformed(evt);
+            }
+        });
+
+        absoluteRadio.setText("絶対値グラフ");
+        absoluteRadio.setName("absoluteRadio"); // NOI18N
+        absoluteRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                absoluteRadioActionPerformed(evt);
+            }
+        });
+
+        countPanel.setName("countPanel"); // NOI18N
+        countPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+
+        countField.setEditable(false);
+        countField.setText("jTextField1");
+        countField.setName("countField"); // NOI18N
+        countPanel.add(countField);
+
+        comboPanel.setName("comboPanel"); // NOI18N
+        comboPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+
+        extractionCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1ケ月", "3ケ月", "半年", "1年", "2年", "3年", "5年" }));
+        extractionCombo.setName("extractionCombo"); // NOI18N
+        extractionCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                extractionComboItemStateChanged(evt);
+            }
+        });
+        comboPanel.add(extractionCombo);
+
+        setLayout(new java.awt.BorderLayout());
+
+        splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        splitPane.setName("splitPane"); // NOI18N
+        splitPane.setOneTouchExpandable(true);
+        add(splitPane, java.awt.BorderLayout.CENTER);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void extractionComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_extractionComboItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            NameValuePair pair = (NameValuePair) extractionCombo.getSelectedItem();
+            String value = pair.getValue();
+            int addValue = Integer.parseInt(value);
+            GregorianCalendar today = new GregorianCalendar();
+            today.add(GregorianCalendar.MONTH, addValue);
+            searchLaboTest(MMLDate.getDate(today));
+        }
+    }//GEN-LAST:event_extractionComboItemStateChanged
+
+    private void relativeRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relativeRadioActionPerformed
+        boolean b = absoluteRadio.isSelected();
+        myPrefs.putBoolean("laboTestDocument.absoluteGraphProp", b);
+
+        if (laboTestGraph == null) {
+            return;
+        }
+
+        int myMode = getMyGraphMode();
+        int mode = laboTestGraph.getMode();
+        if (myMode != mode) {
+            if (laboTestGraph != null) {
+                laboTestGraph.setMode(myMode);
+            }
+        }
+    }//GEN-LAST:event_relativeRadioActionPerformed
+
+    private void absoluteRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_absoluteRadioActionPerformed
+        boolean b = absoluteRadio.isSelected();
+        myPrefs.putBoolean("laboTestDocument.absoluteGraphProp", b);
+
+        if (laboTestGraph == null) {
+            return;
+        }
+
+        int myMode = getMyGraphMode();
+        int mode = laboTestGraph.getMode();
+        if (myMode != mode) {
+            if (laboTestGraph != null) {
+                laboTestGraph.setMode(myMode);
+            }
+        }
+    }//GEN-LAST:event_absoluteRadioActionPerformed
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton absoluteRadio;
+    private javax.swing.ButtonGroup bg;
+    private javax.swing.JPanel comboPanel;
+    private javax.swing.JPanel controlPanel;
+    private javax.swing.JTextField countField;
+    private javax.swing.JPanel countPanel;
+    private javax.swing.JComboBox extractionCombo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton relativeRadio;
+    private javax.swing.JTable rowLabel;
+    private javax.swing.JSplitPane splitPane;
+    private javax.swing.JTable table;
+    private javax.swing.JPanel tablePanel;
+    // End of variables declaration//GEN-END:variables
+
+    /**
+     *
+     * @param command
+     * @return
+     */
+    @Override
+    public boolean dispatchChartCommand(IChartCommandAccepter.ChartCommand command) {
+        return false;
+    }
+
+    /**
+     * テーブルデータを設定する。
+     */
+    public void generateObjectsForTable() {
+
+        // 表示用のラベルテキストを得る
+        String itemText = "項  目";
+        String registText = "登 録";
+        String reportText = "報 告";//GlobalVariables.getString("labotest.table.reportText");
+        String statusText = "ステータス";//GlobalVariables.getString("labotest.table.statusText");
+        String laboCenterText = "検査センター";//GlobalVariables.getString("labotest.table.laboCenterText");
+        String setNameText = "セット名";//GlobalVariables.getString("labotest.table.setNameText");
+
+        // 検索期間内のモジュール数 + 1 がテーブルのカラム数
+
+        int moduleCount = laboModules.size();
+
+        header = new Object[moduleCount + 1];
+        header[0] = itemText;
+
+        for (int i = 1; i <= moduleCount; i++) {
+            header[i] = laboModules.get(i - 1).getHeader();
+        }
+
+        // テーブルの行数 = 全テスト項目 + 6
+        int rowCount = allLaboTest.getRowCount() + 6;
+        laboData = new Object[rowCount][moduleCount + 1];
+        laboData[rowCount - 6][0] = "";
+        laboData[rowCount - 5][0] = registText;
+        laboData[rowCount - 4][0] = reportText;
+        laboData[rowCount - 3][0] = statusText;
+        laboData[rowCount - 2][0] = laboCenterText;
+        laboData[rowCount - 1][0] = setNameText;
+
+        // データ配列を生成する
+        allLaboTest.fillRow(laboData, 0, 0);
+
+        for (int j = 1; j <= moduleCount; j++) {
+            SimpleLaboModule sm = laboModules.get(j - 1);
+            sm.fillNormaliedData(laboData, j, allLaboTest);
+        }
+    }
+
+    /**
+     * テーブルを生成する。
+     */
+    public void constructTable() {
+        if (header != null && header.length > 0 && laboData != null) {
+            DefaultTableModel model = new LaboTestTableModel(laboData, header);
+            table.setModel(model);
+            rowLabel.setModel(model);
+
+            TableColumnModel tcm = table.getColumnModel();
+            TableColumnModel tcm2 = new DefaultTableColumnModel();
+
+            // 検査項目名の列を table から削除し table2 へ加える
+            TableColumn col = tcm.getColumn(0);
+            tcm.removeColumn(col);
+            tcm2.addColumn(col);
+
+            col = tcm2.getColumn(0);
+            col.setMinWidth(CELL_WIDTH);
+            col.setPreferredWidth(CELL_WIDTH);
+            rowLabel.setColumnModel(tcm2);
+            rowLabel.setPreferredScrollableViewportSize(rowLabel.getPreferredSize());
+
+            tcm = table.getColumnModel();
+            int cols = tcm.getColumnCount();
+
+            for (int i = 0; i < cols; i++) {
+                col = tcm.getColumn(i);
+                col.setMinWidth(CELL_WIDTH);
+                col.setPreferredWidth(CELL_WIDTH);
+            }
+
+            ListSelectionModel m = table.getSelectionModel();
+            m.addListSelectionListener(new ListSelectionListener() {
+
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting() == false) {
+                        createLaboTestGraph();
+                    }
+                }
+            });
+            allLaboTest.clear();
+            laboModules.clear();
+        }
+    }
+
+    /**
+     * GUIコンポーネントを初期化する。
+     */
+    private void initCustomComponents() {
+
+        jScrollPane1.setViewportView(table);
+        jScrollPane1.setRowHeaderView(rowLabel);
+        table.setRowSelectionAllowed(true);
+        jScrollPane1.setCorner(JScrollPane.UPPER_LEFT_CORNER, rowLabel.getTableHeader());
+        table.setDefaultRenderer(table.getColumnClass(0), new ImageTableCellRenderer());
+
+        table.getTableHeader().setUpdateTableInRealTime(false);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        rowLabel.getTableHeader().setUpdateTableInRealTime(false);
+        rowLabel.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // Divider
+        dividerWidth = DEFAULT_DIVIDER_WIDTH;
+        dividerLoc = DEFAULT_DIVIDER_LOC;
+
+        createControlPanel(controlPanel);
+
+        laboTestGraph = new LaboTestGraphPanel();
+        laboTestGraph.setPreferredSize(new Dimension(500, dividerLoc));
+
+        jScrollPane1.getViewport().setBackground(GlobalSettings.getColors(GlobalSettings.Parts.TABLE_BACKGROUND));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(3, 600));
+
+        splitPane.setLeftComponent(laboTestGraph);
+        splitPane.setRightComponent(tablePanel);
+
+        splitPane.setDividerSize(dividerWidth);
+        splitPane.setDividerLocation(dividerLoc);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void start() {
+        NameValuePair pair = (NameValuePair) extractionCombo.getSelectedItem();
+        String value = pair.getValue();
+        int addValue = Integer.parseInt(value);
+        GregorianCalendar today = new GregorianCalendar();
+        today.add(GregorianCalendar.MONTH, addValue);
+        searchLaboTest(MMLDate.getDate(today));
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void stop() {
+    }
+
+    /**
+     *
+     * @param str
+     * @return
+     */
+    private String trimJSpace(String str) {
+        String ret = null;
+        if (str != null) {
+            int index = str.indexOf("　");
+            ret = index > 0 ? str.substring(0, index) : str;
+        }
+        return ret;
+    }
+
+    /**
+     * LaboTest の検索タスクをコールする。
+     */
+    private void searchLaboTest(String fromDate) {
+
+        countField.setText("");
+        table.removeAll();
+
+        final LaboSearchSpec spec = new LaboSearchSpec();
+        spec.setKarteId(getParentContext().getKarte().getId());
+        spec.setFromDate(fromDate);
+        spec.setToDate(MMLDate.getDate());
+        ldl = new RemoteLaboDelegater();
+
+        DBTask task = new DBTask<Void>(getParentContext()) {
+
+            @Override
+            public Void doInBackground() throws Exception {
+                List<LaboModuleValue> results = (List<LaboModuleValue>) ldl.getLaboModules(spec);
+                if (results == null || results.isEmpty()) {
+                    return null;
+                }
+                laboModules.clear();
+                for (LaboModuleValue moduleValue : results) {
+                    // LaboModuleValuの簡易版オブジェクトを生成しベクトルに加える
+                    SimpleLaboModule simpleLaboModule = new SimpleLaboModule();
+                    laboModules.add(simpleLaboModule);
+                    // 簡易版に値を設定する
+                    simpleLaboModule.setSampleTime(moduleValue.getSampleTime());
+                    simpleLaboModule.setRegistTime(moduleValue.getRegistTime());
+                    simpleLaboModule.setReportTime(moduleValue.getReportTime());
+                    simpleLaboModule.setMmlConfirmDate(moduleValue.getConfirmDate());
+                    simpleLaboModule.setReportStatus(moduleValue.getReportStatus());
+                    simpleLaboModule.setTestCenterName(moduleValue.getLaboratoryCenter());
+                    simpleLaboModule.setSet(moduleValue.getSetName());
+                    // Module に含まれる標本をイテレートする
+                    Set<LaboSpecimenValue> specimens = moduleValue.getLaboSpecimens();
+                    if (specimens != null) {
+                        // 検索期間に含まれる全ての検査を保持するオブジェクト - allLaboTestsを生成する
+                        allLaboTest.clear();
+                        for (LaboSpecimenValue bean : specimens) {
+                            // 簡易版ラボテストオブジェクトを生成し簡易版のモジュールへ加える
+                            SimpleLaboTest laboTest = new SimpleLaboTest();
+                            simpleLaboModule.addSimpleLaboTest(laboTest);
+                            SimpleLaboSpecimen specimen = new SimpleLaboSpecimen();
+                            laboTest.setSimpleSpecimen(specimen);
+
+                            specimen.setSpecimenCodeID(bean.getSpecimenCodeId());
+                            specimen.setSpecimenCode(bean.getSpecimenCode());
+                            specimen.setSpecimenName(bean.getSpecimenName());
+                            // 標本をキーとして登録する
+                            allLaboTest.addSpecimen(specimen);
+                            // Specimenに含まれる Item をイテレートする
+                            Set<LaboItemValue> items = bean.getLaboItems();
+                            if (items != null) {
+                                for (LaboItemValue itemBean : items) {
+
+                                    // 検索項目を標本キーの値(TreeSet)として登録する
+                                    SimpleLaboTestItem testItem = new SimpleLaboTestItem();
+                                    LaboTestItemID testItemID = new LaboTestItemID();
+                                    testItem.setItemCodeID(itemBean.getItemCodeId());
+                                    testItemID.setItemCodeID(itemBean.getItemCodeId());
+                                    testItem.setItemCode(itemBean.getItemCode());
+                                    testItemID.setItemCode(itemBean.getItemCode());
+                                    testItem.setItemName(trimJSpace(itemBean.getItemName()));
+                                    testItemID.setItemName(trimJSpace(itemBean.getItemName()));
+                                    allLaboTest.addTestItem(specimen, testItemID);
+                                    testItem.setItemValue(itemBean.getItemValue());
+                                    testItem.setItemUnit(itemBean.getUnit());
+                                    testItem.setLow(itemBean.getLow());
+                                    testItem.setUp(itemBean.getUp());
+                                    testItem.setNormal(itemBean.getNormal());
+                                    testItem.setOut(itemBean.getNout());
+                                    laboTest.addSimpleLaboTestItem(testItem);
+                                }
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public void succeeded(Void result) {
+                int count = laboModules.size();
+                countField.setText(String.valueOf(count));
+                generateObjectsForTable();
+                constructTable();
+            }
+        };
+        task.execute();
+    }
+
+    /**
+     *
+     */
+    @SuppressWarnings({"unchecked"})
+    private void createLaboTestGraph() {
+
+        int[] selectedRows = table.getSelectedRows();
+        if (selectedRows == null || selectedRows.length == 0 || laboTestGraph == null) {
+            return;
+        }
+
+        List retList = null;
+        List list = null;
+        int columnCount = table.getColumnCount();
+        boolean hasNonNull = false;
+        for (int i = 0; i < selectedRows.length; i++) {
+            list = new ArrayList();
+            hasNonNull = false;
+            for (int j = 0; j < columnCount; j++) {
+
+                Object o = table.getValueAt(selectedRows[i], j);
+                if (o != null && o instanceof SimpleLaboTestItem) {
+                    SimpleLaboTestItem item = (SimpleLaboTestItem) o;
+                    String value = item.getItemValue();
+                    if (value != null) {
+                        try {
+                            Float.parseFloat(value);
+                            list.add(item);
+                            hasNonNull = true;
+                        } catch (NullPointerException nulle) {
+                            list.add(null);
+                        } catch (NumberFormatException ne) {
+                            list.add(null);
+                        } catch (Exception oe) {
+                            list.add(null);
+                        }
+                    } else {
+                        list.add(null);
+                    }
+                } else {
+                    list.add(null);
+                }
+            }
+
+            if (hasNonNull) {
+                if (retList == null) {
+                    retList = new ArrayList();
+                }
+                retList.add(list);
+            }
+        }
+
+        // Test
+        if (retList == null || retList.isEmpty()) {
+            return;
+        }
+
+        String[] sampleTime = new String[header.length - 1];
+
+        for (int j = 1; j < header.length; j++) {
+            String val = (String) header[j];
+            if (val != null) {
+                int index = val.indexOf(": ");
+                sampleTime[j - 1] = index > 0 ? val.substring(index + 1) : val;
+            } else {
+                sampleTime[j - 1] = null;
+            }
+        }
+        laboTestGraph.setTestValue(sampleTime, retList, getMyGraphMode());
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int getMyGraphMode() {
+        return absoluteRadio.isSelected() ? 0 : 1;
+    }
+
+    /**
+     * 抽出期間パネルを返す
+     */
+    private JPanel createControlPanel(JPanel panel) {
+
+        panel.add(Box.createHorizontalStrut(7));
+
+        // 抽出期間コンボボックス
+        panel.add(new JLabel("抽出期間(過去)"));
+        panel.add(Box.createRigidArea(new Dimension(5, 0)));
+
+        extractionCombo.setModel(new DefaultComboBoxModel(periodObject));
+        // Preference値を選択
+
+        int past = GlobalVariables.getPreferences().getInt(GlobalVariables.LABOTEST_PERIOD, -6);
+        int index = NameValuePair.getIndex(String.valueOf(past), periodObject);// MEMO;Unused?
+
+        panel.add(comboPanel);
+
+        // スペース
+        panel.add(Box.createHorizontalStrut(7));
+
+        // 件数フィールド
+        panel.add(new JLabel("件数"));
+        panel.add(Box.createRigidArea(new Dimension(5, 0)));
+        panel.add(countPanel);
+
+        // グル
+        panel.add(Box.createHorizontalGlue());
+
+        bg.add(relativeRadio);
+        bg.add(absoluteRadio);
+        panel.add(relativeRadio);
+        panel.add(Box.createHorizontalStrut(5));
+        panel.add(absoluteRadio);
+
+        boolean bAbsolute = myPrefs.getBoolean("laboTestDocument.absoluteGraphProp", true);
+        relativeRadio.setSelected(!bAbsolute);
+        absoluteRadio.setSelected(bAbsolute);
+
+        // スペース
+        panel.add(Box.createHorizontalStrut(7));
+        return panel;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean itLayoutSaved() {
+        return true;
+    }
+    //元々はAbstractChartDocumentから継承
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public IChart getParentContext() {
+        return parent;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void enter() {
+        getParentContext().getChartMediator().setAccepter(this);
+        disableMenus();
+        getParentContext().enabledAction(GUIConst.ACTION_NEW_KARTE, true);
+        getParentContext().enabledAction(GUIConst.ACTION_NEW_DOCUMENT, true);
+        getParentContext().enabledAction(GUIConst.ACTION_ADD_USER, GlobalVariables.isAdmin());
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean prepare() {
+        return true;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     *
+     * @param dirty
+     */
+    @Override
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isReadOnly() {
+        return getParentContext().isReadOnly();
+    }
+
+    /**
+     *
+     */
+    public void disableMenus() {
+        // このウインドウに関連する全てのメニューをdisableにする
+        ChartMediator mediator = getParentContext().getChartMediator();
+        mediator.disableMenus(CHART_MENUS);
+    }
+
+    /**
+     * 共通の警告表示を行う。
+     * @param title
+     * @param message
+     */
+    protected void warning(String title, String message) {
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        JOptionPane.showMessageDialog(parentWindow, message, GlobalConstants.getFrameTitle(title), JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<JTabbedPane> getTabbedPanels() {
+        return null;
+    }
+
+    /**
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean update(Object o) {
+        return true;
+    }
+
+    /**
+     * 検査テーブルモデル　MEMO:モデル
+     */
+    class LaboTestTableModel extends DefaultTableModel {
+
+        private LaboTestTableModel(Object[][] laboData, Object[] header) {
+            super(laboData, header);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return false;
+        }
+    }
+
+    /**
+     *
+     */
+    class ImageTableCellRenderer extends JLabel implements TableCellRenderer {
+
+        private static final long serialVersionUID = -520905432722518156L;
+        private Color penCol = Color.black;
+        private String upperValueText = "(上限値";//GlobalVariables.getString("labotest.value.upperText");
+        private String standardValueText = "(基準値";//GlobalVariables.getString("labotest.value.standardText");
+        private String lowerValueText = "(下限値";//GlobalVariables.getString("labotest.value.lowerText");
+
+        /**
+         *
+         */
+        public ImageTableCellRenderer() {
+            setOpaque(true);
+            setBackground(Color.white);
+            setHorizontalAlignment(LEFT);
+            setVerticalAlignment(CENTER);
+        }
+
+        /**
+         *
+         * @param table
+         * @param value
+         * @param isSelected
+         * @param hasFocus
+         * @param row
+         * @param column
+         * @return
+         */
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+            if (isSelected) {
+                setBackground(table.getSelectionBackground());
+                setForeground(table.getSelectionForeground());
+            } else {
+                setBackground(table.getBackground());
+                setForeground(table.getForeground());
+            }
+
+            //-------------------------------------------------------
+            if (value != null) {
+                if (value instanceof java.lang.String) {
+                    penCol = Color.black;
+                    setForeground(penCol);
+                    setText((String) value);
+                    setToolTipText("");
+                } else if (value instanceof open.dolphin.plugin.labotestdocumentpanel.SimpleLaboTestItem) {
+
+                    SimpleLaboTestItem testItem = (SimpleLaboTestItem) value;
+                    // 検査値表示用カラーを得る
+                    String out = testItem.getOut();
+                    if (out == null) {
+                        penCol = Color.black;
+                    } else if (out.equals("L")) {
+                        penCol = lowColor;
+                    } else if (out.equals("N")) {
+                        penCol = normalColor;
+                    } else if (out.equals("H")) {
+                        penCol = highColor;
+                    } else {
+                        penCol = Color.black;
+                    }
+
+                    setForeground(penCol);
+                    setText(testItem.toString());
+
+                    // ToolTips を設定する
+                    StringBuilder buf = new StringBuilder();
+                    if (testItem.getUp() != null) {
+                        buf.append(upperValueText);
+                        buf.append(testItem.getUp());
+                        buf.append(") ");
+                    }
+
+                    if (testItem.getLow() != null) {
+                        buf.append(lowerValueText);
+                        buf.append(testItem.getLow());
+                        buf.append(") ");
+                    }
+
+                    if (testItem.getNormal() != null) {
+                        buf.append(standardValueText);
+                        buf.append(testItem.getNormal());
+                        buf.append(")");
+                    }
+
+                    if (buf.length() > 0) {
+                        setToolTipText(buf.toString());
+                    }
+
+                } else if (value instanceof open.dolphin.plugin.labotestdocumentpanel.SimpleLaboSpecimen) {
+                    SimpleLaboSpecimen specimen = (SimpleLaboSpecimen) value;
+                    setBackground(specimenColor);	// 標本表示カラー
+                    setForeground(Color.black);
+                    setText(specimen.toString());
+                }
+
+            } else {
+                penCol = Color.black;
+                setForeground(penCol);
+                setText("");
+                setToolTipText("");
+            }
+            //-------------------------------------------------------
+            return this;
+        }
+    }
+}

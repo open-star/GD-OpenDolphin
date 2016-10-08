@@ -1,0 +1,23 @@
+#Marathon Project File
+#Fri May 14 14:41:47 JST 2010
+marathon.checklist.dir=%marathon.project.dir%/Checklists
+marathon.test.dir=%marathon.project.dir%/TestCases
+marathon.application.launchtime=60000
+marathon.runtime.assertions=Enabled\:\:;Background\:\:;Foreground\:\:;RowCount\:javax.swing.JTable\:;ColumnCount\:javax.swing.JTable\:;ItemCount\:javax.swing.JComboBox\:;Model.Size\:javax.swing.JList\:ItemCount;Font\:\:;Font.Family\:\:FontFamily;Border\:\:;Border.LineColor\:\:BorderLineColor
+marathon.component.ignore.components=javax.swing.JMenuBar(ignorechild\:false);javax.swing.JToolBar(ignorechild\:false);javax.swing.JPanel(ignorechild\:false);javax.swing.JViewport(ignorechild\:false);javax.swing.JScrollBar(ignorechild\:true)
+marathon.application.classpath=%marathon.project.dir%/../client/dist/OpenDolphinClient.jar
+marathon.application.arguments=
+marathon.application.working.dir=
+marathon.capture.dir=%marathon.project.dir%/Modules
+marathon.application.mainclass=open.dolphin.client.Dolphin
+marathon.recorder.namingstrategy=net.sourceforge.marathon.component.MarathonNamingStrategy
+marathon.fixture.dir=%marathon.project.dir%/Fixtures
+marathon.component.resolvers=
+marathon.application.toolkit_menumask=false
+marathon.project.description=
+marathon.application.vm.command=
+marathon.project.name=dolphin-marathon
+marathon.application.vm.arguments=
+marathon.application.rubyhome=
+marathon.application.rubypath=
+marathon.project.script.model=net.sourceforge.marathon.ruby.RubyScriptModel

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://192.168.0.239:4957/opendolphin" href="database_initializer.jnlp">
+    <information>
+        <title>OpenDolphin</title>
+        <vendor>株式会社グッデイ</vendor>
+        <offline-allowed />
+    </information>
+    <resources>
+        <j2se version="1.6+" />
+        <jar href="DatabaseInitializer.jar" />
+        <jar href="../lib/antlr-2.7.6.jar" />
+        <jar href="../lib/asm.jar" />
+        <jar href="../lib/cglib-2.1.3.jar" />
+        <jar href="../lib/commons-collections-2.1.1.jar" />
+        <jar href="../lib/commons-logging-1.1.jar" />
+        <jar href="../lib/dom4j-1.6.1.jar" />
+        <jar href="../lib/ejb3-persistence.jar" />
+        <jar href="../lib/hibernate-annotations.jar" />
+        <jar href="../lib/hibernate-commons-annotations.jar" />
+        <jar href="../lib/hibernate-entitymanager.jar" />
+        <jar href="../lib/hibernate-tools.jar" />
+        <jar href="../lib/hibernate3.jar" />
+        <jar href="../lib/jdom.jar" />
+        <jar href="../lib/jta.jar" />
+        <jar href="../lib/log4j.jar" />
+        <jar href="../lib/postgresql-8.4-701.jdbc3.jar" />
+    </resources>
+    <application-desc main-class="open.dolphin.master.DatabaseInitializer" />
+    <security>
+        <all-permissions />
+    </security>
+</jnlp>

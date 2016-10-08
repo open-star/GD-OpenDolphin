@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.PatientMemoModel" schema="public" table="d_patient_memo">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.KarteBean" name="karte">
+      <column name="karte_id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="open.dolphin.infomodel.UserModel" name="creator">
+      <column name="creator_id" not-null="true"/>
+    </many-to-one>
+    <property name="confirmed" type="timestamp">
+      <column length="29" name="confirmed" not-null="true"/>
+    </property>
+    <property name="started" type="timestamp">
+      <column length="29" name="started" not-null="true"/>
+    </property>
+    <property name="ended" type="timestamp">
+      <column length="29" name="ended"/>
+    </property>
+    <property name="recorded" type="timestamp">
+      <column length="29" name="recorded" not-null="true"/>
+    </property>
+    <property name="linkId" type="long">
+      <column name="linkid" not-null="true"/>
+    </property>
+    <property name="linkRelation" type="string">
+      <column name="linkrelation"/>
+    </property>
+    <property name="status" type="string">
+      <column length="1" name="status" not-null="true"/>
+    </property>
+    <property name="memo" type="string">
+      <column name="memo"/>
+    </property>
+  </class>
+</hibernate-mapping>

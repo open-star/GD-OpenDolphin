@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.DocumentModel" schema="public" table="d_document">
+    <id name="id" type="long" unsaved-value="0">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.KarteBean" name="karte">
+      <column name="karte_id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="open.dolphin.infomodel.UserModel" name="creator">
+      <column name="creator_id" not-null="true"/>
+    </many-to-one>
+    <property name="confirmed" type="timestamp">
+      <column length="29" name="confirmed" not-null="true"/>
+    </property>
+    <property name="started" type="timestamp">
+      <column length="29" name="started" not-null="true"/>
+    </property>
+    <property name="ended" type="timestamp">
+      <column length="29" name="ended"/>
+    </property>
+    <property name="recorded" type="timestamp">
+      <column length="29" name="recorded" not-null="true"/>
+    </property>
+    <property name="linkId" type="long">
+      <column name="linkid" not-null="true"/>
+    </property>
+    <property name="linkRelation" type="string">
+      <column name="linkrelation"/>
+    </property>
+    <property name="status" type="string">
+      <column length="1" name="status" not-null="true"/>
+    </property>
+    <component class="open.dolphin.infomodel.DocInfoModel" name="docInfo">
+      <property name="docId" type="string">
+        <column length="32" name="docid" not-null="true"/>
+      </property>
+      <property name="docType" type="string">
+        <column name="doctype" not-null="true"/>
+      </property>
+      <property name="title" type="string">
+        <column name="title" not-null="true"/>
+      </property>
+      <property name="purpose" type="string">
+        <column name="purpose" not-null="true"/>
+      </property>
+      <property name="department" type="string">
+        <column name="department"/>
+      </property>
+      <property name="departmentDesc" type="string">
+        <column name="departmentdesc"/>
+      </property>
+      <property name="healthInsurance" type="string">
+        <column name="healthinsurance"/>
+      </property>
+      <property name="healthInsuranceDesc" type="string">
+        <column name="healthinsurancedesc"/>
+      </property>
+      <property name="healthInsuranceGUID" type="string">
+        <column name="healthinsuranceguid"/>
+      </property>
+      <property name="hasMark" type="boolean">
+        <column name="hasmark" not-null="true"/>
+      </property>
+      <property name="hasImage" type="boolean">
+        <column name="hasimage" not-null="true"/>
+      </property>
+      <property name="hasRp" type="boolean">
+        <column name="hasrp" not-null="true"/>
+      </property>
+      <property name="hasTreatment" type="boolean">
+        <column name="hastreatment" not-null="true"/>
+      </property>
+      <property name="hasLaboTest" type="boolean">
+        <column name="haslabotest" not-null="true"/>
+      </property>
+      <property name="versionNumber" type="string">
+        <column name="versionnumber"/>
+      </property>
+      <property name="parentId" type="string">
+        <column name="parentid"/>
+      </property>
+      <property name="parentIdRelation" type="string">
+        <column name="parentidrelation"/>
+      </property>
+    </component>
+    <set cascade="save-update,delete" inverse="true" lazy="false" name="schemas" order-by="id asc" table="d_image">
+      <key column="doc_id" not-null="true"/>
+      <one-to-many class="open.dolphin.infomodel.SchemaModel"/>
+    </set>
+    <set cascade="save-update,delete" inverse="true" lazy="false" name="modules" order-by="id asc" table="d_module">
+      <key column="doc_id" not-null="true"/>
+      <one-to-many class="open.dolphin.infomodel.ModuleModel"/>
+    </set>
+  </class>
+</hibernate-mapping>

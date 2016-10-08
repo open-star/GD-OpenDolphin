@@ -1,0 +1,14 @@
+open.dolphin.service.remote.AddressSearch
+open.dolphin.service.remote.AbstractPatientModelFinder
+open.dolphin.service.remote.NameSearch
+open.dolphin.service.remote.RomanSearch
+open.dolphin.service.remote.TelephoneSearch
+open.dolphin.service.remote.RemotePatientService
+open.dolphin.service.remote.PatientModelFinder
+open.dolphin.service.remote.AllSerach
+open.dolphin.service.remote.DateSearch
+open.dolphin.service.remote.DigitSearch
+open.dolphin.service.remote.EmailSearch
+open.dolphin.service.remote.ZipCodeSearch
+open.dolphin.service.remote.IdSearch
+open.dolphin.service.remote.KanaSearch

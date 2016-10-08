@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class lazy="false" name="open.dolphin.infomodel.FacilityModel" schema="public" table="d_facility">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <property name="facilityId" type="string">
+      <column name="facilityid" not-null="true" unique="true"/>
+    </property>
+    <property name="facilityName" type="string">
+      <column name="facilityname" not-null="true"/>
+    </property>
+    <property name="zipCode" type="string">
+      <column name="zipcode" not-null="true"/>
+    </property>
+    <property name="address" type="string">
+      <column name="address" not-null="true"/>
+    </property>
+    <property name="telephone" type="string">
+      <column name="telephone" not-null="true"/>
+    </property>
+    <property name="url" type="string">
+      <column name="url"/>
+    </property>
+    <property name="registeredDate" type="date">
+      <column length="13" name="registereddate" not-null="true"/>
+    </property>
+    <property name="memberType" type="string">
+      <column name="membertype" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

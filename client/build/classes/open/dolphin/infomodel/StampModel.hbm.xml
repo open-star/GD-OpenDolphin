@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.StampModel" schema="public" table="d_stamp">
+    <id name="id" type="string">
+      <column name="id"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="userId" type="long">
+      <column name="userid" not-null="true"/>
+    </property>
+    <property name="entity" type="string">
+      <column name="entity" not-null="true"/>
+    </property>
+    <property name="stampBlob" type="blob">
+      <column name="stampbytes" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

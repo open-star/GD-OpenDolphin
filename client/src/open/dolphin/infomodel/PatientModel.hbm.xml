@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class lazy="false" name="open.dolphin.infomodel.PatientModel" schema="public" table="d_patient">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <property name="facilityId" type="string">
+      <column name="facilityid" not-null="true"/>
+    </property>
+    <property name="patientId" type="string">
+      <column name="patientid" not-null="true"/>
+    </property>
+    <property name="familyName" type="string">
+      <column name="familyname"/>
+    </property>
+    <property name="givenName" type="string">
+      <column name="givenname"/>
+    </property>
+    <property name="fullName" type="string">
+      <column name="fullname" not-null="true"/>
+    </property>
+    <property name="kanaFamilyName" type="string">
+      <column name="kanafamilyname"/>
+    </property>
+    <property name="kanaGivenName" type="string">
+      <column name="kanagivenname"/>
+    </property>
+    <property name="kanaName" type="string">
+      <column name="kananame"/>
+    </property>
+    <property name="romanFamilyName" type="string">
+      <column name="romanfamilyname"/>
+    </property>
+    <property name="romanGivenName" type="string">
+      <column name="romangivenname"/>
+    </property>
+    <property name="romanName" type="string">
+      <column name="romanname"/>
+    </property>
+    <property name="gender" type="string">
+      <column name="gender" not-null="true"/>
+    </property>
+    <property name="genderDesc" type="string">
+      <column name="genderdesc"/>
+    </property>
+    <property name="birthday" type="string">
+      <column name="birthday"/>
+    </property>
+    <property name="nationality" type="string">
+      <column name="nationality"/>
+    </property>
+    <property name="maritalStatus" type="string">
+      <column name="maritalstatus"/>
+    </property>
+    <property name="jpegPhoto" type="java.lang.Long">
+      <column name="jpegphoto"/>
+    </property>
+    <property name="memo" type="string">
+      <column name="memo"/>
+    </property>
+    <component class="open.dolphin.infomodel.SimpleAddressModel" name="address">
+      <property name="address" type="string">
+        <column name="address"/>
+      </property>
+      <property name="zipCode" type="string">
+        <column name="zipcode"/>
+      </property>
+    </component>
+    <property name="mobilePhone" type="string">
+      <column name="mobilephone"/>
+    </property>
+    <property name="email" type="string">
+      <column name="email"/>
+    </property>
+    <set cascade="save-update,delete" inverse="true" lazy="false" name="healthInsurances" table="d_health_insurance">
+      <key column="patient_id" not-null="true"/>
+      <one-to-many class="open.dolphin.infomodel.HealthInsuranceModel"/>
+    </set>
+  </class>
+</hibernate-mapping>

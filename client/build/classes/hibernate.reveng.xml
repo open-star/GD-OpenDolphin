@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="dolphin" match-schema="public"/>
+  <table-filter match-name="d_image"/>
+  <table-filter match-name="d_appo"/>
+  <table-filter match-name="d_stamp_tree"/>
+  <table-filter match-name="d_diagnosis"/>
+  <table-filter match-name="d_stamp"/>
+  <table-filter match-name="d_radiology_method"/>
+  <table-filter match-name="d_module"/>
+  <table-filter match-name="d_letter"/>
+  <table-filter match-name="d_labo_module"/>
+  <table-filter match-name="d_patient_visit"/>
+  <table-filter match-name="d_published_tree"/>
+  <table-filter match-name="d_facility"/>
+  <table-filter match-name="d_first_encounter"/>
+  <table-filter match-name="d_users"/>
+  <table-filter match-name="d_roles"/>
+  <table-filter match-name="d_observation"/>
+  <table-filter match-name="d_phenomenon"/>
+  <table-filter match-name="d_labo_specimen"/>
+  <table-filter match-name="d_document"/>
+  <table-filter match-name="d_health_insurance"/>
+  <table-filter match-name="d_subscribed_tree"/>
+  <table-filter match-name="d_patient"/>
+  <table-filter match-name="d_labo_item"/>
+  <table-filter match-name="d_composite_image"/>
+  <table-filter match-name="d_karte"/>
+  <table-filter match-name="d_patient_memo"/>
+</hibernate-reverse-engineering>

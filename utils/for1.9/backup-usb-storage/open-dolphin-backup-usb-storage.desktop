@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=OpenDolphin USB Backup
+Name[ja_JP]=OpenDolphin USB記憶装置へのバックアップ
+Exec=/usr/bin/open-dolphin-backup-usb-storage
+Icon=/usr/share/open-dolphin-backup-usb-storage/gnome-dev-removable-usb.png
+StartupNotify=true
+Type=Application
+Terminal=false
+

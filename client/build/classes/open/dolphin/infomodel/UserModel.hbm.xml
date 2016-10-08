@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class lazy="false" name="open.dolphin.infomodel.UserModel" schema="public" table="d_users">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.FacilityModel" name="facility">
+      <column name="facility_id" not-null="true"/>
+    </many-to-one>
+    <property name="userId" type="string">
+      <column name="userid" not-null="true" unique="true"/>
+    </property>
+    <property name="password" type="string">
+      <column name="password" not-null="true"/>
+    </property>
+    <property name="sirName" type="string">
+      <column name="sirname"/>
+    </property>
+    <property name="givenName" type="string">
+      <column name="givenname"/>
+    </property>
+    <property name="commonName" type="string">
+      <column name="commonname" not-null="true"/>
+    </property>
+    <component class="open.dolphin.infomodel.LicenseModel" name="licenseModel">
+      <property name="license" type="string">
+        <column name="license"/>
+      </property>
+      <property name="licenseDesc" type="string">
+        <column name="licensedesc"/>
+      </property>
+      <property name="licenseCodeSys" type="string">
+        <column name="licensecodesys"/>
+      </property>
+    </component>
+    <component class="open.dolphin.infomodel.DepartmentModel" name="departmentModel">
+      <property name="department" type="string">
+        <column name="department"/>
+      </property>
+      <property name="departmentDesc" type="string">
+        <column name="departmentdesc"/>
+      </property>
+      <property name="departmentCodeSys" type="string">
+        <column name="departmentcodesys"/>
+      </property>
+    </component>
+    <property name="memberType" type="string">
+      <column name="membertype" not-null="true"/>
+    </property>
+    <property name="memo" type="string">
+      <column name="memo"/>
+    </property>
+    <property lazy="false" name="registeredDate" type="date">
+      <column length="13" name="registereddate" not-null="true"/>
+    </property>
+    <property name="email" type="string">
+      <column name="email" not-null="true"/>
+    </property>
+    <set cascade="all" inverse="true" lazy="false" name="roles" table="d_roles">
+      <key>
+        <column name="c_user" not-null="true"/>
+      </key>
+      <one-to-many class="open.dolphin.infomodel.RoleModel"/>
+    </set>
+  </class>
+</hibernate-mapping>

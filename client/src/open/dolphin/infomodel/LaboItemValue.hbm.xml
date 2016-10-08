@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.LaboItemValue" schema="public" table="d_labo_item">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.LaboSpecimenValue" name="laboSpecimen">
+      <column name="specimen_id" not-null="true"/>
+    </many-to-one>
+    <property name="itemName" type="string">
+      <column name="itemname"/>
+    </property>
+    <property name="itemCode" type="string">
+      <column name="itemcode"/>
+    </property>
+    <property name="itemCodeId" type="string">
+      <column name="itemcodeid"/>
+    </property>
+    <property name="acode" type="string">
+      <column name="acode"/>
+    </property>
+    <property name="icode" type="string">
+      <column name="icode"/>
+    </property>
+    <property name="scode" type="string">
+      <column name="scode"/>
+    </property>
+    <property name="mcode" type="string">
+      <column name="mcode"/>
+    </property>
+    <property name="rcode" type="string">
+      <column name="rcode"/>
+    </property>
+    <property name="itemValue" type="string">
+      <column name="itemvalue"/>
+    </property>
+    <property name="up" type="string">
+      <column name="up"/>
+    </property>
+    <property name="low" type="string">
+      <column name="low"/>
+    </property>
+    <property name="normal" type="string">
+      <column name="normal"/>
+    </property>
+    <property name="nout" type="string">
+      <column name="nout"/>
+    </property>
+    <property name="unit" type="string">
+      <column name="unit"/>
+    </property>
+    <property name="unitCode" type="string">
+      <column name="unitcode"/>
+    </property>
+    <property name="unitCodeId" type="string">
+      <column name="unitcodeid"/>
+    </property>
+  </class>
+</hibernate-mapping>

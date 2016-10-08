@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.LaboSpecimenValue" schema="public" table="d_labo_specimen">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.LaboModuleValue" name="laboModule">
+      <column name="module_id" not-null="true"/>
+    </many-to-one>
+    <property name="specimenName" type="string">
+      <column name="specimenname"/>
+    </property>
+    <property name="specimenCode" type="string">
+      <column name="specimencode"/>
+    </property>
+    <property name="specimenCodeId" type="string">
+      <column name="specimencodeid"/>
+    </property>
+    <set cascade="save-update,delete" inverse="true" lazy="false" name="laboItems" order-by="id asc" table="d_labo_item">
+      <key column="specimen_id" not-null="true"/>
+      <one-to-many class="open.dolphin.infomodel.LaboItemValue"/>
+    </set>
+  </class>
+</hibernate-mapping>

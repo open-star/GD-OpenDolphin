@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2010/06/30 10:58:02 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="open.dolphin.infomodel.StampTreeModel" schema="public" table="d_stamp_tree">
+    <id name="id" type="long">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one class="open.dolphin.infomodel.UserModel" name="user">
+      <column name="user_id" not-null="true"/>
+    </many-to-one>
+    <property name="name" type="string">
+      <column name="tree_name" not-null="true"/>
+    </property>
+    <property name="publishType" type="string">
+      <column name="publishtype"/>
+    </property>
+    <property name="category" type="string">
+      <column name="category"/>
+    </property>
+    <property name="partyName" type="string">
+      <column name="partyname"/>
+    </property>
+    <property name="url" type="string">
+      <column name="url"/>
+    </property>
+    <property name="description" type="string">
+      <column name="description"/>
+    </property>
+    <property name="publishedDate" type="date">
+      <column length="13" name="publisheddate"/>
+    </property>
+    <property name="lastUpdated" type="date">
+      <column length="13" name="lastupdated"/>
+    </property>
+    <property name="published" type="string">
+      <column name="published"/>
+    </property>
+    <property name="treeBlob" type="blob">
+      <column name="treebytes" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

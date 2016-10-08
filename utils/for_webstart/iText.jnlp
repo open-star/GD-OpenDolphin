@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://192.168.0.239:4957/opendolphin" href="iText.jnlp">
+    <information>
+        <title>OpenDolphin</title>
+        <vendor>株式会社グッデイ</vendor>
+        <offline-allowed />
+    </information>
+    <resources>
+        <jar href="lib/iText-2.0.8.jar" />
+    </resources>
+    <application-desc main-class="open.dolphin.client.Dolphin" />
+    <security>
+        <all-permissions />
+    </security>
+    <component-desc />
+</jnlp>
+
