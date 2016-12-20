@@ -23,16 +23,18 @@ import open.dolphin.service.IPvtService;
 public abstract class PVTDelegater extends DelegaterErrorHandler {
 
     /**
-     *
-     * @return
+     * 受付患者のインスタンスを取得する
+     * @return 受付患者のインスタンス
      * @throws NamingException
      */
     protected abstract IPvtService getService() throws NamingException;
 
     /**
      *
-     * @param pvtModel
-     * @return
+     * @param pvtModel 患者来院情報
+     * @return 登録個数
+     * 登録できた場合: 1
+     * 例外が発生した場合: 0
      */
     public int addPvt(PatientVisitModel pvtModel) {
         try {

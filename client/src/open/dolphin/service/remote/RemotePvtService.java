@@ -37,8 +37,9 @@ public class  RemotePvtService extends DolphinService implements IPvtService {
     
     /**
      * 患者来院情報を登録する。
-     * @param pvt
-     * @return 登録個数
+     * @param pvt 患者来院情報
+     * @return 登録個数(常に 1)
+     * @exception NoResultException 指定した患者IDの来院情報が存在しない場合（新患者の場合）
      */
     @Override
     public int addPvt(PatientVisitModel pvt) {

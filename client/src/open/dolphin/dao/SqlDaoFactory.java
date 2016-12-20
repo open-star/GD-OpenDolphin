@@ -5,6 +5,7 @@ import open.dolphin.project.*;
 
 /**
  * 【SqlDaoBean】オブジェクトのファクトリです。
+ * orca、または dolphin のオブジェクトを生成する
  * @author  Kazushi Minagawa, Digital Globe, Inc.
  */
 public class SqlDaoFactory {
@@ -18,7 +19,7 @@ public class SqlDaoFactory {
     private static final String USER_DOPHIN = "dolphin";
     private static final String PASSWORD_TRIAL = "UQ6nRcOa";
 
-    private static final String DAO_MASTER = "dao.master";
+    private static final String DAO_MASTER = "dao.master"; //ORCAのマスタ
 
     /**
      * Creates a new instance of DaoFactory
@@ -28,18 +29,23 @@ public class SqlDaoFactory {
 
     /**
      * <p> Creates DataAccessObject
-     * SqlDaoBean オブジェクトを返す
-     * @param keyString
-     * @return SqlDaoBean オブジェクト
+     * SqlDaoBean オブジェクトを生成するファクトリメソッド
+     * orca、または dolphin のオブジェクトを生成する。
+     * ただし、dolphin のテーブルは、Hibernate を使ってアクセスするので
+     * dolphin のオブジェクトを生成するケースは無い。
+     * @param keyString 生成するオブジェクトの種類（orca/dolphin）
+     * @return SqlDaoBean オブジェクト（orca/dolphin）
      */
     public static SqlDaoBean create(String keyString) {
         SqlDaoBean dao = null;
+        
         try {
-            dao = new open.dolphin.dao.SqlMasterDao();
-
-            dao.setDriver(POSTGRESQL_DRIVER);
 
             if (keyString.equals(DAO_MASTER)) {
+                // ORCA の場合
+                dao = new open.dolphin.dao.SqlMasterDao();
+
+                dao.setDriver(POSTGRESQL_DRIVER);
                 dao.setHost(GlobalVariables.getClaimAddress());
 
                 if (GlobalSettings.isTrial()) {
@@ -52,19 +58,24 @@ public class SqlDaoFactory {
                     dao.setPasswd(PASSWORD_ORCA);
                 }
                 dao.setDatabase(DB_ORCA);
-            } else {
-                dao.setHost(GlobalVariables.getDbAddress());
-
-                if (GlobalSettings.isTrial()) {
-                    dao.setPort(TRIAL_PORT);
-                } else {
-                    dao.setPort(POSTGRESQL_PORT);
-                }
-
-                dao.setDatabase(DB_DOLPHIN);
-                dao.setUser(USER_DOPHIN);
-                dao.setPasswd("");
             }
+//            else {
+//                //Dolphin の場合
+//                dao = new open.dolphin.dao.SqlDolphinDao();
+//                
+//               dao.setDriver(POSTGRESQL_DRIVER);
+//                dao.setHost(GlobalVariables.getDbAddress());
+//
+//                if (GlobalSettings.isTrial()) {
+//                    dao.setPort(TRIAL_PORT);
+//                } else {
+//                    dao.setPort(POSTGRESQL_PORT);
+//                }
+//
+//                dao.setDatabase(DB_DOLPHIN);
+//                dao.setUser(USER_DOPHIN);
+//                dao.setPasswd("");
+//            }
 
         } catch (Exception e) {
             LogWriter.error(SqlDaoBean.class, e);

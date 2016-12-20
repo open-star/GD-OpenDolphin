@@ -15,7 +15,7 @@ import org.jdesktop.application.LocalStorage;
 import org.jdesktop.application.ResourceMap;
 
 /**
- *
+ * 大域定数のクラス
  * @author  Kazushi Minagawa, Digital Globe, Inc.
  */
 public class GlobalConstants {
@@ -23,8 +23,8 @@ public class GlobalConstants {
     private static GlobalConstantsImplement stub;
 
     /**
-     *
-     * @param context
+     * 大域定数を生成する
+     * @param context リソースやアクション等のアプリケーション固有情報
      */
     public static void createGlobalConstants(ApplicationContext context) {
         stub = new GlobalConstantsImplement(context);
@@ -33,7 +33,7 @@ public class GlobalConstants {
 
     /**
      *
-     * @return
+     * @return リソースやアクション等のアプリケーション固有情報
      */
     public static ApplicationContext getApplicationContext() {
         return stub.getApplicationContext();
@@ -41,7 +41,7 @@ public class GlobalConstants {
 
     /**
      *
-     * @param ctx
+     * @param ctx リソースやアクション等のアプリケーション固有情報
      */
     private static void setApplicationContext(ApplicationContext ctx) {
         stub.setApplicationContext(ctx);

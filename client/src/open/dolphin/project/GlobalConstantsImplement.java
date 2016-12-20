@@ -27,7 +27,7 @@ import org.jdesktop.application.ResourceMap;
 
 /**
  * Dolphin Client のコンテキストクラス。
- *
+ * 大域定数
  * @author  Kazushi Minagawa, Digital Globe, Inc.
  */
 public class GlobalConstantsImplement {
@@ -473,9 +473,9 @@ public class GlobalConstantsImplement {
      */
 
     /**
-     *
+     * 名前とコードの一組を返す
      * @param key
-     * @return
+     * @return 名前とコードの一組
      */
     public NameValuePair[] getNameValuePair(String key) {
         NameValuePair[] ret = null;
@@ -511,9 +511,9 @@ public class GlobalConstantsImplement {
     }
 
     /**
-     *
-     * @param key
-     * @return
+     * リソースバンドルから指定されたキーの文字列を取得します
+     * @param key　目的の文字列のキー
+     * @return 指定されたキーの文字列
      */
     public String getString(String key) {
         return resBundle.getString(key);

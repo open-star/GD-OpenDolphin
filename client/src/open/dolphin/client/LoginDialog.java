@@ -434,7 +434,7 @@ public class LoginDialog extends javax.swing.JDialog {
         if (GlobalSettings.isTrial()) {
             setTitle("ログイン-OpenDolphin-1.9");
         } else {
-            setTitle("ログイン-OpenDolphin-1.9.4.1");
+            setTitle("ログイン-OpenDolphin-1.9.4.2");
         }
         getRootPane().setDefaultButton(loginBtn);
         blockGlass = new BlockGlass();

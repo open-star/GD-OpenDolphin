@@ -5,7 +5,7 @@
 
 /*
  * KarteSettingPanel.java
- *
+ * 環境設定 - カルテ
  * Created on 2010/03/10, 15:36:06
  */
 package open.dolphin.client.settings;
@@ -77,9 +77,9 @@ public class KarteSettingPanel extends javax.swing.JPanel implements IAbstractSe
     private boolean defaultAutoOutcomeInput;
     private int defaultOffsetOutcomeDate;
     private int defaultLaboTestPeriod;
-    private NameValuePair[] periodObjects;    // インスペクタ画面
-    private NameValuePair[] diagnosisPeriodObjects;    // 病名関係
-    private NameValuePair[] laboTestPeriodObjects;    // 検体検査
+    private NameValuePair[] periodObjects;    // インスペクタ画面　文書履歴の期間
+    private NameValuePair[] diagnosisPeriodObjects;    // 病名関係　期間
+    private NameValuePair[] laboTestPeriodObjects;    // 検体検査　期間
     private KarteModel model;
     private boolean ok = true;
     private Adapter<Boolean, Boolean> adapter;
@@ -1500,11 +1500,11 @@ public class KarteSettingPanel extends javax.swing.JPanel implements IAbstractSe
         defaultOffsetOutcomeDate = -7;
         defaultLaboTestPeriod = -6;
 
-        periodObjects = GlobalConstants.getNameValuePair("docHistory.combo.period");
+        periodObjects = GlobalConstants.getNameValuePair("docHistory.combo.period");         //文書履歴の期間 
         periodCombo.setModel(new DefaultComboBoxModel(periodObjects));
         diagnosisPeriodObjects = GlobalConstants.getNameValuePair("diagnosis.combo.period");
         diagnosisPeriodCombo.setModel(new DefaultComboBoxModel(diagnosisPeriodObjects));
-        laboTestPeriodObjects = GlobalConstants.getNameValuePair("docHistory.combo.period");
+        laboTestPeriodObjects = GlobalConstants.getNameValuePair("docHistory.combo.period"); //文書履歴の期間
         laboTestPeriodCombo.setModel(new DefaultComboBoxModel(laboTestPeriodObjects));
 
         int currentFetchCount = prefs.getInt(GlobalVariables.DOC_HISTORY_FETCHCOUNT, defaultFetchCount);

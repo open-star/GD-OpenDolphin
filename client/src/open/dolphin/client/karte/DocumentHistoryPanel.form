@@ -19,7 +19,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="0" pref="280" max="32767" attributes="2"/>
+          <Component id="jScrollPane1" alignment="0" pref="294" max="32767" attributes="2"/>
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
@@ -27,7 +27,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="periodCombo" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="searchField" alignment="1" pref="201" max="32767" attributes="1"/>
+                  <Component id="searchField" alignment="1" pref="222" max="32767" attributes="1"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -110,17 +110,17 @@
     <Component class="javax.swing.JComboBox" name="periodCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="8">
             <StringItem index="0" value="1&#x30f6;&#x6708;"/>
             <StringItem index="1" value="3&#x30f6;&#x6708;"/>
             <StringItem index="2" value="&#x534a;&#x5e74;"/>
             <StringItem index="3" value="1&#x5e74;"/>
             <StringItem index="4" value="2&#x5e74;"/>
             <StringItem index="5" value="3&#x5e74;"/>
-            <StringItem index="6" value="&#x5168;&#x3066;"/>
+            <StringItem index="6" value="5&#x5e74;"/>
+            <StringItem index="7" value="&#x5168;&#x3066;"/>
           </StringArray>
         </Property>
-        <Property name="selectedIndex" type="int" value="3"/>
         <Property name="name" type="java.lang.String" value="periodCombo" noResource="true"/>
       </Properties>
       <Events>

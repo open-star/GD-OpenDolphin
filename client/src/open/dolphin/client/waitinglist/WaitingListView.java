@@ -90,7 +90,7 @@ public class WaitingListView extends javax.swing.JPanel implements IMainComponen
     private int STATE_COLUMN = 7;    // 来院情報テーブルのステータスカラム
     private final int AGE_COLUMN = 4;    // 年齢表示カラム
     private final String[] AGE_METHOD = new String[]{"getPatientAgeBirthday", "getPatientBirthday"};    // 年齢生年月日メソッド
-    private ObjectReflectTableModel<PatientVisitModel> pvtTableModel;
+    private ObjectReflectTableModel<PatientVisitModel> pvtTableModel; //患者来院情報のテーブル
     private Preferences preferences;    // Preference
     private boolean sexRenderer;    // 性別レンダラフラグ
     private boolean ageDisplay;    // 年齢表示
@@ -98,7 +98,7 @@ public class WaitingListView extends javax.swing.JPanel implements IMainComponen
     private Date checkedTime;    // 受付 DB をチェックした Date
     private int pvtCount;    // 来院患者数
     private int checkInterval;    // チェック間隔
-    private PatientVisitModel selectedPvt;    // 選択されている患者情報
+    private PatientVisitModel selectedPvt;    // 選択されている患者来院情報
     private int saveSelectedIndex;
     private ScheduledFuture timerHandler;
     private RunnablePvtChecker pvtChecker;
@@ -122,8 +122,8 @@ public class WaitingListView extends javax.swing.JPanel implements IMainComponen
     }
 
     /**
-     * 患者来院情報の一覧を返す
-     * @return
+     * d_patient_visit(患者来院情報)の一覧を返す
+     * @return 患者来院情報
      */
     private List<PatientVisitModel> getWaitingList() {
         return (List<PatientVisitModel>) new RemotePVTDelegater().getPvt(getSearchDateAsString(new Date()), 0);

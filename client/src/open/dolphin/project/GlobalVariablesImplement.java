@@ -10,12 +10,12 @@ import open.dolphin.security.EncryptUtil;
 
 /**
  * プロジェクト情報管理クラス。
- *
+ * 大域変数 インタフェースの実装
  * @author  Kazushi Minagawa, Digital Globe, Inc.
  */
 public class GlobalVariablesImplement implements java.io.Serializable {
 
-    private Preferences prefs;
+    private Preferences prefs; // ちょっとしたデータ
 //    private boolean valid;
     private DolphinPrincipal principal;
     private UserModel userModel;
@@ -66,7 +66,7 @@ public class GlobalVariablesImplement implements java.io.Serializable {
 
     /**
      * Preferencesを返す。
-     * @return 設定ノード
+     * @return 設定ノード（ちょっとしたデータ）
      */
     public Preferences getPreferences() {
         return prefs;

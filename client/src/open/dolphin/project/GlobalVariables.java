@@ -15,7 +15,7 @@ import open.dolphin.utils.CombinedStringParser;
 
 /**
  * プロジェクト情報管理クラス。
- *
+ *　大域変数
  * @author  Kazushi Minagawa, Digital Globe, Inc.
  */
 public class GlobalVariables {
@@ -307,7 +307,7 @@ public class GlobalVariables {
     private static GlobalVariablesImplement stub;
 
     /**
-     *
+     * 大域変数を生成する
      */
     public static void createGlobalVariables() {
         stub = new GlobalVariablesImplement();
@@ -339,7 +339,7 @@ public class GlobalVariables {
 
     /**
      * 設定ノードを返します
-     * @return 設定ノード
+     * @return 設定ノード（ちょっとしたデータ）
      */
     public static Preferences getPreferences() {
         return stub.getPreferences();

@@ -34,15 +34,15 @@ public class PatientVisitModel extends InfoModel {
      *　Drag&Drop用
      */
     public static DataFlavor flavors[] = {PVT_FLAVOR};
-    private long id;//MEMO:Refrection
-    private PatientModel patient;//患者
-    private String facilityId;//施設ID MEMO:Refrection
-    private String pvtDate;//来訪日 MEMO:Refrection
-    private String department;//科 MEMO:Refrection
-    private int status; //MEMO:Refrection
-    private String insuranceUid;//保険ID MEMO:Refrection
+    private long id;             //MEMO:Refrection
+    private PatientModel patient;//d_patient（患者）
+    private String facilityId;   //施設ID MEMO:Refrection
+    private String pvtDate;      //来訪日 MEMO:Refrection
+    private String department;   //科     MEMO:Refrection
+    private int status;          //       MEMO:Refrection
+    private String insuranceUid; //保険ID MEMO:Refrection
     @Transient
-    private String appointment;//予約
+    private String appointment;  //予約
     @Transient
     private int number;
 
@@ -71,8 +71,8 @@ public class PatientVisitModel extends InfoModel {
     }
 
     /**
-     * 患者を取得
-     * @return patient
+     * d_patient（患者）を取得
+     * @return d_patient（患者）
      */
     public PatientModel getPatient() {
         return this.patient;
@@ -97,9 +97,9 @@ public class PatientVisitModel extends InfoModel {
     }
 
     /**
-     * patientのSetter
+     * d_patient（患者）のSetter
      * MEMO:Reflection
-     * @param patient
+     * @param patient d_patient（患者）
      */
     public void setPatient(PatientModel patient) {
         this.patient = patient;
@@ -144,7 +144,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * pvtDateのGetter
      * MEMO:Reflection
-     * @return
+     * @return 来訪日
      */
     public String getPvtDate() {
         return this.pvtDate;
@@ -153,7 +153,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * pvtDateのSetter
      * MEMO:Reflection
-     * @param pvtDate
+     * @param pvtDate 来訪日
      */
     public void setPvtDate(String pvtDate) {
         this.pvtDate = pvtDate;
@@ -162,7 +162,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * pvtDateTrimTimeのGetter
      * MEMO:Reflection
-     * @return
+     * @return 来訪日
      */
     public String getPvtDateTrimTime() {
         return ModelUtils.trimTime(pvtDate);
@@ -171,7 +171,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * pvtDateTrimDateのGetter
      * MEMO:Reflection
-     * @return
+     * @return 来訪日
      */
     public String getPvtDateTrimDate() {
         return ModelUtils.trimDate(pvtDate);
@@ -180,7 +180,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * departmentNameのGetter
      * MEMO:Reflection
-     * @return DepartmentName
+     * @return DepartmentName 診療科名
      */
     public String getDepartmentName() {
         // MEMO: Need to check this method
@@ -363,7 +363,7 @@ public class PatientVisitModel extends InfoModel {
     /**
      * patientIdのGetter
      * MEMO:Reflection
-     * @return
+     * @return 患者ID
      */
     public String getPatientId() {
         return getPatient().getPatientId();

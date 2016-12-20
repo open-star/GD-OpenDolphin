@@ -21,8 +21,8 @@ public class RemotePVTDelegater extends PVTDelegater {
     }
 
     /**
-     *
-     * @return
+     * 受付患者のインスタンスを取得する
+     * @return 受付患者のインスタンス
      * @throws NamingException
      */
     @Override

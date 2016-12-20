@@ -27,7 +27,7 @@ import open.dolphin.utils.DateExpire;
 
 /**
  * SqlMasterDao　MEMO:DAO
- *
+ * ORCAのマスタをアクセスするためのクラス
  * @author Kazushi Minagawa
  */
 public final class SqlMasterDao extends SqlDaoBean {
@@ -67,12 +67,13 @@ public final class SqlMasterDao extends SqlDaoBean {
 
     /** 
      * Creates a new instance of SqlMasterDao
+     * 「病名」テーブルのSELECT文を作成
      */
     public SqlMasterDao() {
-//      super(); //@Del 2012/06/27 星野 雅昭
+        //super(); //@Del 2012/06/27 星野 雅昭
 
         // pinusさんのコードを使用、及び変更
-        // 病名テーブルは、バージョンの違いに対応必要なので、ここで sql を作成する
+        // 「病名」テーブルは、バージョンの違いに対応必要なので、ここで sql を作成する
         if (super.ORCA_DB_VER45.equals(getOrcaDbVersion())) {
             SQL_TBL_BYOMEI = SQL_TBL_BYOMEI.replace("icd10_1", "icd10");
         }

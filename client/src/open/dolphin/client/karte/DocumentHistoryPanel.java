@@ -1,6 +1,6 @@
 /*
  * DocumentHistoryPanel.java
- *
+ * 
  * Created on 2007/11/29, 16:10
  */
 package open.dolphin.client.karte;
@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -87,8 +88,8 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
     private boolean showUnsend = true;    // 修正版も表示するかどうかのフラグ
     private boolean showSend = true;    // 修正版も表示するかどうかのフラグ
     private boolean start;    // フラグ
-    private NameValuePair[] contentObject;
-    private NameValuePair[] extractionObjects;
+    private NameValuePair[] contentObject;     //文書種別（カルテ、紹介状、紹介返書）
+    private NameValuePair[] extractionObjects; //抽出期間
     //  private BlockKeyListener blockKeyListener;    // Key入力をブロックするリスナ
     private IChart parent;    // context
     private String title;
@@ -176,8 +177,7 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
             }
         });
 
-        periodCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1ヶ月", "3ヶ月", "半年", "1年", "2年", "3年", "全て" }));
-        periodCombo.setSelectedIndex(3);
+        periodCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1ヶ月", "3ヶ月", "半年", "1年", "2年", "3年", "5年", "全て" }));
         periodCombo.setName("periodCombo"); // NOI18N
         periodCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -205,14 +205,14 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(docTypeCombo, 0, 133, Short.MAX_VALUE)
                         .add(18, 18, 18)
                         .add(periodCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, searchField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, searchField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                     .add(searchButton)
@@ -261,24 +261,24 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
         }
     }//GEN-LAST:event_searchFieldActionPerformed
     /**
-     * 
+     * 文書種別（カルテ、紹介状、紹介返書）
      * @param evt
      */
     private void docTypeComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_docTypeComboItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             int index = docTypeCombo.getSelectedIndex();
-            NameValuePair pair = contentObject[index];
+            NameValuePair pair = contentObject[index]; //文書種別（カルテ、紹介状、紹介返書）
             setExtractionContent(pair.getValue());
         }
     }//GEN-LAST:event_docTypeComboItemStateChanged
     /**
-     * 
+     * 期間
      * @param evt
      */
     private void periodComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_periodComboItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             int index = periodCombo.getSelectedIndex();
-            NameValuePair pair = extractionObjects[index];
+            NameValuePair pair = extractionObjects[index]; //抽出期間
             String value = pair.getValue();
             int addValue = Integer.parseInt(value);
             GregorianCalendar today = new GregorianCalendar();
@@ -311,8 +311,10 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
         int[] columnWidth = {110, 110, 110, 110};
         int startNumRows = 0;
 
-        extractionObjects = GlobalConstants.getNameValuePair("docHistory.combo.period");
-
+        extractionObjects = GlobalConstants.getNameValuePair("docHistory.combo.period"); //抽出期間
+        
+        periodCombo.setModel(new DefaultComboBoxModel(extractionObjects));
+        
         // 文書履歴テーブルを生成する
         tableModel = new ObjectReflectTableModel<DocInfoModel>(columnNames, startNumRows, methodNames, columnClasses) {
 
@@ -401,11 +403,11 @@ public class DocumentHistoryPanel extends JPanel implements IChartDocument {
 
         // Preference から文書種別を設定する
         extractionContent = IInfoModel.DOCTYPE_KARTE;
-
+        
         // Preference から抽出期間を設定する
         int past = GlobalVariables.getPreferences().getInt(GlobalVariables.DOC_HISTORY_PERIOD, -12);	//past 12 months
-        int index = NameValuePair.getIndex(String.valueOf(past), extractionObjects);
-        periodCombo.setSelectedIndex(index);
+        int index = NameValuePair.getIndex(String.valueOf(past), extractionObjects);//抽出期間
+        periodCombo.setSelectedIndex(index); //インデックスにある項目を選択します。
         GregorianCalendar today = new GregorianCalendar();
         today.add(GregorianCalendar.MONTH, past);
         today.clear(Calendar.HOUR_OF_DAY);

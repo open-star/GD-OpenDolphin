@@ -51,7 +51,7 @@ public class SqlDaoBean extends DaoBean {
 //@End 2012/06/26 星野 雅昭
 
     private static int hospNum;         // 医療機関識別番号
-    private static String dbVersion;
+    private static String dbVersion;    // ORCAのデータベースのバージョン
     
     protected String getOrcaDbVersion() {
         return dbVersion;
@@ -62,7 +62,10 @@ public class SqlDaoBean extends DaoBean {
         return hospNum;
     }
     
-    // ORCAのデータベースバージョンとhospNumを取得する
+    /**
+     * dbVersion（ORCAのデータベースのバージョン）と
+     * hospNum（医療機関識別番号）を取得する
+     */
     //protected void setHospNum {               //@Rep 2012/06/26 星野 雅昭
     protected void setHospNumFromOrca() {   
 

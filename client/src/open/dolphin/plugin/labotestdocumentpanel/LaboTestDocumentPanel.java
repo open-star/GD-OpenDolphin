@@ -74,7 +74,7 @@ public class LaboTestDocumentPanel extends javax.swing.JPanel implements IChartD
     private Object[][] laboData;
     private List<SimpleLaboModule> laboModules;
     private AllLaboTest allLaboTest;
-    private NameValuePair[] periodObject = GlobalConstants.getNameValuePair("docHistory.combo.period");
+    private NameValuePair[] periodObject = GlobalConstants.getNameValuePair("docHistory.combo.period"); //文書履歴の期間
     private RemoteLaboDelegater ldl;
     private LaboTestGraphPanel laboTestGraph;
     private int dividerWidth;

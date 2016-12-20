@@ -148,6 +148,10 @@ class WriteShokenFile extends WriteFileToRSB {
         //フォーマットパターンを指定して、SimpleDateFormatオブジェクトsdf1を生成します。
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
         sb.append(sdf1.format(date1));
+        
+        //同日再診の判定
+        
+        
         sb.append(BR);
 
         sb.append(text);
